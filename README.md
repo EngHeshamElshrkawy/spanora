@@ -20,7 +20,7 @@ Then visit `http://localhost:8000`. Add `?dev` to the URL to see the teacher, te
 - **Testimonials:** add real, approved quotations to `testimonials`, or set `config.showTestimonialPlaceholders` to `false` until they are available.
 - **Brand mark:** replace `assets/logo.svg` with the new logo, keeping the same filename. The site header, footer and SVG favicon use that shared asset; regenerate `favicon-32.png`, `apple-touch-icon.png` and `og-image.png` from their SVG sources when the artwork changes.
 - **Colors and layout:** edit `css/tokens.css` for brand colors, then the relevant CSS component file.
-- **Lens behavior:** edit `config.lensStyle` (`magnifier` or `torch`) and `config.revealThreshold` in `js/content.js`; its implementation is in `js/intro-lens.js`. Scratching reveals English beneath while masking away the Spanish text in the same area.
+- **Intro scratch reveal:** the canvas erases the Spanish cover with a soft torch brush, revealing English underneath. Edit `config.revealThreshold` in `js/content.js` to adjust the completion threshold; the effect lives in `js/intro-lens.js` and `css/intro-lens.css`.
 
 ## Before launch
 

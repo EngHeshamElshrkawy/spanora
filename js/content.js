@@ -1,12 +1,12 @@
 window.SPANORA = {
   config: {
     email: "Conecta@spanora.info",
-    whatsapp: "201110827032",
+    whatsapp: "2011108327042",
     currency: "EGP",
     currencyPlaceholder: true,
     showTestimonialPlaceholders: true,
-    lensStyle: "magnifier",
-    revealThreshold: 0.92
+    lensStyle: "torch",
+    revealThreshold: 0.9
   },
   tagline: {
     es: "Tus metas marcan el camino y tus intereses hacen tuyo el viaje.",

@@ -2,317 +2,299 @@
   "use strict";
 
   var stage = document.querySelector("[data-lens-stage]");
-  var spanish = document.querySelector("[data-intro-es]");
   var english = document.querySelector("[data-intro-en]");
-  var lens = document.querySelector(".lens");
+  var spanish = document.querySelector("[data-intro-es]");
+  var canvas = document.querySelector("[data-intro-canvas]");
+  var glow = document.querySelector("[data-torch-glow]");
   var hint = document.querySelector("[data-lens-hint]");
   var doneMessage = document.querySelector("[data-intro-done]");
   var revealButton = document.querySelector("[data-reveal-all]");
   var replayButton = document.querySelector("[data-replay]");
-  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var supportsMask = window.CSS && (
-    CSS.supports("mask-image", "url(x)") ||
-    CSS.supports("-webkit-mask-image", "url(x)")
-  );
-
-  if (!supportsMask || !stage || !window.HTMLCanvasElement.prototype.toBlob) {
-    stage.classList.add("is-fallback");
-    english.setAttribute("aria-hidden", "false");
-    hint.hidden = true;
-    return;
-  }
-
-  var canvas = document.createElement("canvas");
   var context = canvas.getContext("2d", { willReadFrequently: true });
-  var scale = 0.5;
   var lastPoint = null;
   var samplePoints = [];
-  var updateQueued = false;
-  var lastMaskUpdate = 0;
-  var maskUrl = null;
-  var spanishMaskUrl = null;
-  var inverseCanvas = document.createElement("canvas");
-  var inverseContext = inverseCanvas.getContext("2d", { willReadFrequently: true });
-  var generation = 0;
+  var dpr = 1;
+  var radius = 38;
   var completed = false;
-  var threshold = window.SPANORA.config.revealThreshold;
-  var diameter = 200;
-  var frameTimer = 0;
-  var throttleTimer = 0;
-  var hintAnimationId = 0;
-  var hintTimer = 0;
+  var progressTimer = 0;
+  var progressPending = false;
+  var resizeTimer = 0;
+  var threshold = window.SPANORA.config.revealThreshold || 0.9;
+  var coverColor = "#FFEED9";
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  var spanishParagraphs = [];
+  var sourceParagraphs = window.SPANORA.intro.paragraphs;
+  spanish.innerHTML = sourceParagraphs.map(function (paragraph) {
+    return "<p>" + escapeHtml(paragraph.es) + "</p>";
+  }).join("");
+  spanishParagraphs = Array.prototype.slice.call(spanish.querySelectorAll("p"));
 
   if (!context) {
     stage.classList.add("is-fallback");
     english.setAttribute("aria-hidden", "false");
+    spanish.classList.remove("visually-hidden");
     hint.hidden = true;
     return;
   }
 
-  if (window.SPANORA.config.lensStyle === "torch") lens.classList.add("lens--torch");
-  stage.classList.add("is-ready");
-
-  function getDiameter() {
-    return window.matchMedia("(max-width: 700px)").matches ? 150 : diameter;
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function (character) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character];
+    });
   }
 
-  function buildSamples() {
+  function wrapText(text, maxWidth) {
+    var words = text.trim().split(/\s+/);
+    var lines = [];
+    var line = "";
+
+    words.forEach(function (word) {
+      if (context.measureText(word).width > maxWidth) {
+        if (line) lines.push(line);
+        line = "";
+        var fragment = "";
+        Array.from(word).forEach(function (character) {
+          if (fragment && context.measureText(fragment + character).width > maxWidth) {
+            lines.push(fragment);
+            fragment = character;
+          } else {
+            fragment += character;
+          }
+        });
+        line = fragment;
+        return;
+      }
+
+      var candidate = line ? line + " " + word : word;
+      if (line && context.measureText(candidate).width > maxWidth) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = candidate;
+      }
+    });
+
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  function measureAndPaint() {
+    var width = Math.max(1, stage.getBoundingClientRect().width);
+    var englishParagraph = english.querySelector("p");
+    if (!englishParagraph || !width) return;
+
+    var style = window.getComputedStyle(englishParagraph);
+    var fontSize = parseFloat(style.fontSize) || 20;
+    var lineHeight = parseFloat(style.lineHeight) || fontSize * 1.85;
+    var paragraphStyle = window.getComputedStyle(spanishParagraphs[0]);
+    var paragraphGap = parseFloat(paragraphStyle.marginBottom) || fontSize * 1.3;
+    dpr = window.devicePixelRatio || 1;
+
+    stage.style.minHeight = "";
+    canvas.style.width = width + "px";
+    canvas.style.height = "100%";
+    context.font = style.font;
+    if (!context.font || context.font === "10px sans-serif") {
+      context.font = style.fontSize + " " + style.fontFamily;
+    }
+    context.textBaseline = "top";
+    context.textAlign = style.textAlign === "start" ? "left" : style.textAlign;
+
+    var spanishLayout = spanishParagraphs.map(function (paragraph) {
+      return {
+        lines: wrapText(paragraph.textContent, width),
+        marginBottom: parseFloat(window.getComputedStyle(paragraph).marginBottom) || paragraphGap
+      };
+    });
+    var spanishHeight = spanishLayout.reduce(function (total, paragraph, index) {
+      return total + paragraph.lines.length * lineHeight +
+        (index < spanishLayout.length - 1 ? paragraph.marginBottom : 0);
+    }, 0);
+    var stageHeight = Math.ceil(Math.max(english.scrollHeight, spanishHeight));
+    stage.style.minHeight = stageHeight + "px";
     var bounds = stage.getBoundingClientRect();
+    canvas.style.height = stageHeight + "px";
+    canvas.width = Math.max(1, Math.round(width * dpr));
+    canvas.height = Math.max(1, Math.round(stageHeight * dpr));
+    context = canvas.getContext("2d", { willReadFrequently: true });
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    context.font = style.font;
+    if (!context.font || context.font === "10px sans-serif") {
+      context.font = style.fontSize + " " + style.fontFamily;
+    }
+    context.textBaseline = "top";
+    context.textAlign = style.textAlign === "start" ? "left" : style.textAlign;
+    context.clearRect(0, 0, width, stageHeight);
+    context.globalCompositeOperation = "source-over";
+    context.fillStyle = coverColor;
+    context.fillRect(0, 0, width, stageHeight);
+    context.fillStyle = style.color;
+
+    var y = 0;
+    spanishLayout.forEach(function (paragraph, index) {
+      paragraph.lines.forEach(function (line) {
+        context.fillText(line, 0, y);
+        y += lineHeight;
+      });
+      if (index < spanishLayout.length - 1) y += paragraph.marginBottom;
+    });
+
+    buildSamples(bounds);
+  }
+
+  function buildSamples(stageBounds) {
     var points = [];
-    Array.prototype.forEach.call(english.querySelectorAll("p"), function (paragraph) {
-      var range = document.createRange();
-      range.selectNodeContents(paragraph);
-      Array.prototype.forEach.call(range.getClientRects(), function (rect) {
-        var left = Math.max(0, rect.left - bounds.left);
-        var right = Math.min(bounds.width, rect.right - bounds.left);
-        var top = Math.max(0, rect.top - bounds.top);
-        var bottom = Math.min(bounds.height, rect.bottom - bounds.top);
-        for (var y = top + 8; y < bottom; y += 16) {
-          for (var x = left + 8; x < right; x += 16) points.push({ x: x, y: y });
-        }
-        if (!points.length || (right > left && bottom > top)) {
-          points.push({ x: (left + right) / 2, y: (top + bottom) / 2 });
+    var range = document.createRange();
+    range.selectNodeContents(english);
+    Array.prototype.forEach.call(range.getClientRects(), function (rect) {
+      var left = Math.max(0, rect.left - stageBounds.left);
+      var right = Math.min(stageBounds.width, rect.right - stageBounds.left);
+      var top = Math.max(0, rect.top - stageBounds.top);
+      var bottom = Math.min(canvas.clientHeight, rect.bottom - stageBounds.top);
+      var heights = [top + (bottom - top) * 0.25, top + (bottom - top) * 0.75];
+      heights.forEach(function (y) {
+        for (var x = left + 4; x < right; x += 8) {
+          points.push({
+            x: Math.min(canvas.width - 1, Math.round(x * dpr)),
+            y: Math.min(canvas.height - 1, Math.round(y * dpr))
+          });
         }
       });
     });
     samplePoints = points;
   }
 
-  function updateMaskUrl() {
-    var now = performance.now();
-    if (updateQueued) return;
-    updateQueued = true;
-    throttleTimer = window.setTimeout(function () {
-      frameTimer = window.requestAnimationFrame(function () {
-        updateQueued = false;
-        lastMaskUpdate = performance.now();
-        var currentGeneration = ++generation;
-        var pixels = context.getImageData(0, 0, canvas.width, canvas.height);
-        var inversePixels = inverseContext.createImageData(canvas.width, canvas.height);
-        for (var index = 0; index < pixels.data.length; index += 4) {
-          var inverseAlpha = 255 - pixels.data[index + 3];
-          inversePixels.data[index] = 255;
-          inversePixels.data[index + 1] = 255;
-          inversePixels.data[index + 2] = 255;
-          inversePixels.data[index + 3] = inverseAlpha;
-        }
-        inverseContext.putImageData(inversePixels, 0, 0);
-
-        Promise.all([
-          new Promise(function (resolve) { canvas.toBlob(resolve, "image/png"); }),
-          new Promise(function (resolve) { inverseCanvas.toBlob(resolve, "image/png"); })
-        ]).then(function (blobs) {
-          if (!blobs[0] || !blobs[1] || currentGeneration !== generation || completed) return;
-          var nextUrl = URL.createObjectURL(blobs[0]);
-          var nextSpanishUrl = URL.createObjectURL(blobs[1]);
-          english.style.maskImage = "url('" + nextUrl + "')";
-          english.style.webkitMaskImage = "url('" + nextUrl + "')";
-          spanish.style.maskImage = "url('" + nextSpanishUrl + "')";
-          spanish.style.webkitMaskImage = "url('" + nextSpanishUrl + "')";
-          [english, spanish].forEach(function (layer) {
-            layer.style.maskSize = "100% 100%";
-            layer.style.webkitMaskSize = "100% 100%";
-            layer.style.maskRepeat = "no-repeat";
-            layer.style.webkitMaskRepeat = "no-repeat";
-            layer.style.maskMode = "alpha";
-          });
-          if (!completed) english.style.opacity = "";
-          if (maskUrl) URL.revokeObjectURL(maskUrl);
-          if (spanishMaskUrl) URL.revokeObjectURL(spanishMaskUrl);
-          maskUrl = nextUrl;
-          spanishMaskUrl = nextSpanishUrl;
-          checkCoverage();
-        });
-      });
-    }, Math.max(0, 33 - (now - lastMaskUpdate)));
-  }
-
-  function resizeCanvas(preserve) {
-    var previous = null;
-    if (preserve && canvas.width && canvas.height) {
-      previous = document.createElement("canvas");
-      previous.width = canvas.width;
-      previous.height = canvas.height;
-      previous.getContext("2d").drawImage(canvas, 0, 0);
-    }
-    stage.style.minHeight = Math.ceil(Math.max(spanish.scrollHeight, english.scrollHeight)) + "px";
-    var bounds = stage.getBoundingClientRect();
-    var width = Math.max(1, Math.ceil(bounds.width * scale));
-    var height = Math.max(1, Math.ceil(bounds.height * scale));
-    canvas.width = width;
-    canvas.height = height;
-    inverseCanvas.width = width;
-    inverseCanvas.height = height;
-    context = canvas.getContext("2d", { willReadFrequently: true });
-    inverseContext = inverseCanvas.getContext("2d", { willReadFrequently: true });
-    context.setTransform(scale, 0, 0, scale, 0, 0);
-    if (previous) context.drawImage(previous, 0, 0, previous.width, previous.height, 0, 0, bounds.width, bounds.height);
-    buildSamples();
-    updateMaskUrl();
-  }
-
-  function paintAt(point) {
-    if (completed) return;
-    var radius = getDiameter() / 2 - 12;
-    var gradient = context.createRadialGradient(point.x, point.y, radius * 0.66, point.x, point.y, radius + 14);
-    gradient.addColorStop(0, "rgba(255,255,255,1)");
-    gradient.addColorStop(.82, "rgba(255,255,255,.95)");
-    gradient.addColorStop(1, "rgba(255,255,255,0)");
-    context.globalCompositeOperation = "source-over";
+  function stamp(x, y) {
+    var gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+    gradient.addColorStop(0, "rgba(0, 0, 0, 1)");
+    gradient.addColorStop(0.7, "rgba(0, 0, 0, 1)");
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+    context.globalCompositeOperation = "destination-out";
     context.fillStyle = gradient;
     context.beginPath();
-    context.arc(point.x, point.y, radius + 14, 0, Math.PI * 2);
+    context.arc(x, y, radius, 0, Math.PI * 2);
     context.fill();
-    updateMaskUrl();
   }
 
-  function paintSegment(from, to) {
-    var distance = Math.hypot(to.x - from.x, to.y - from.y);
-    var steps = Math.max(1, Math.ceil(distance / Math.max(6, getDiameter() / 10)));
-    for (var index = 1; index <= steps; index += 1) {
-      var ratio = index / steps;
-      paintAt({ x: from.x + (to.x - from.x) * ratio, y: from.y + (to.y - from.y) * ratio });
+  function scratchTo(point) {
+    if (completed) return;
+    if (!lastPoint) {
+      stamp(point.x, point.y);
+    } else {
+      var dx = point.x - lastPoint.x;
+      var dy = point.y - lastPoint.y;
+      var distance = Math.hypot(dx, dy);
+      var spacing = Math.max(1, radius / 3);
+      var steps = Math.max(1, Math.ceil(distance / spacing));
+      for (var step = 1; step <= steps; step += 1) {
+        var progress = step / steps;
+        stamp(lastPoint.x + dx * progress, lastPoint.y + dy * progress);
+      }
     }
+    lastPoint = point;
+    scheduleProgressCheck();
   }
 
-  function checkCoverage() {
-    if (completed || !samplePoints.length) return;
-    var pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
-    var revealed = 0;
-    for (var index = 0; index < samplePoints.length; index += 1) {
-      var point = samplePoints[index];
-      var x = Math.min(canvas.width - 1, Math.max(0, Math.floor(point.x * scale)));
-      var y = Math.min(canvas.height - 1, Math.max(0, Math.floor(point.y * scale)));
-      if (pixels[(y * canvas.width + x) * 4 + 3] > 128) revealed += 1;
-    }
-    if (revealed / samplePoints.length >= threshold) complete();
+  function scheduleProgressCheck() {
+    progressPending = true;
+    if (progressTimer) return;
+    progressTimer = window.setTimeout(function checkProgress() {
+      progressTimer = 0;
+      if (completed || !progressPending) return;
+      progressPending = false;
+      var pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+      var revealed = 0;
+      samplePoints.forEach(function (point) {
+        var alphaIndex = (point.y * canvas.width + point.x) * 4 + 3;
+        if (pixels[alphaIndex] < 60) revealed += 1;
+      });
+      if (samplePoints.length && revealed / samplePoints.length >= threshold) finishReveal();
+      else if (progressPending) progressTimer = window.setTimeout(checkProgress, 150);
+    }, 150);
   }
 
-  function complete() {
+  function moveGlow(event) {
+    glow.style.transform = "translate(" + event.clientX + "px, " + event.clientY + "px) translate(-50%, -50%)";
+  }
+
+  function pointFromEvent(event) {
+    var bounds = canvas.getBoundingClientRect();
+    return {
+      x: event.clientX - bounds.left,
+      y: event.clientY - bounds.top
+    };
+  }
+
+  function finishReveal() {
     if (completed) return;
     completed = true;
-    stage.classList.add("is-complete");
-    stage.classList.remove("is-ready");
-    english.style.maskImage = "none";
-    english.style.webkitMaskImage = "none";
-    spanish.style.maskImage = "none";
-    spanish.style.webkitMaskImage = "none";
+    stage.classList.add("is-done");
     english.setAttribute("aria-hidden", "false");
-    english.classList.add("is-fading");
-    english.style.opacity = "1";
-    if (!reducedMotion.matches) {
-      spanish.style.transition = "opacity .6s ease";
-      spanish.style.opacity = "0";
-    } else {
-      spanish.style.display = "none";
-    }
     doneMessage.hidden = false;
     revealButton.hidden = true;
     replayButton.hidden = false;
     hint.hidden = true;
-  }
-
-  function pointFromEvent(event) {
-    var bounds = stage.getBoundingClientRect();
-    return { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
-  }
-
-  function handlePointer(event) {
-    if (completed || !stage.classList.contains("is-ready")) return;
-    if (hintAnimationId) {
-      window.cancelAnimationFrame(hintAnimationId);
-      window.clearTimeout(hintTimer);
-      hintAnimationId = 0;
-      lens.style.opacity = "";
-    }
-    var point = pointFromEvent(event);
-    if (event.pointerType === "touch") {
-      lens.style.transform = "translate3d(" + event.clientX + "px," + (event.clientY - 60) + "px,0) translate(-50%,-50%)";
-    } else {
-      lens.style.transform = "translate3d(" + event.clientX + "px," + event.clientY + "px,0) translate(-50%,-50%)";
-    }
-    if (lastPoint) paintSegment(lastPoint, point);
-    else paintAt(point);
-    lastPoint = point;
-    hint.hidden = true;
-  }
-
-  function revealAll() {
-    if (!completed) complete();
-  }
-
-  function replay() {
-    completed = false;
-    stage.classList.remove("is-complete");
-    spanish.style.opacity = "";
-    spanish.style.display = "";
-    spanish.style.transition = "";
-    english.style.maskImage = "none";
-    english.style.webkitMaskImage = "none";
-    spanish.style.maskImage = "none";
-    spanish.style.webkitMaskImage = "none";
-    english.style.opacity = "0";
-    english.classList.remove("is-fading");
-    english.setAttribute("aria-hidden", "true");
-    doneMessage.hidden = true;
-    replayButton.hidden = true;
-    revealButton.hidden = false;
-    context.clearRect(0, 0, canvas.width / scale, canvas.height / scale);
+    glow.classList.remove("is-visible");
     lastPoint = null;
-    stage.classList.add("is-ready");
-    updateMaskUrl();
-    stage.focus({ preventScroll: true });
+  }
+
+  function resetReveal() {
+    completed = false;
+    progressPending = false;
+    window.clearTimeout(progressTimer);
+    progressTimer = 0;
+    lastPoint = null;
+    stage.classList.remove("is-done");
+    doneMessage.hidden = true;
+    revealButton.hidden = false;
+    replayButton.hidden = true;
+    english.setAttribute("aria-hidden", "true");
+    glow.classList.remove("is-visible");
+    measureAndPaint();
   }
 
   stage.addEventListener("pointerenter", function (event) {
+    if (completed) return;
+    glow.classList.add("is-visible");
+    moveGlow(event);
     lastPoint = null;
-    handlePointer(event);
   });
-  stage.addEventListener("pointermove", handlePointer);
-  stage.addEventListener("pointerleave", function () { lastPoint = null; });
+
+  stage.addEventListener("pointermove", function (event) {
+    if (completed) return;
+    moveGlow(event);
+    scratchTo(pointFromEvent(event));
+    hint.hidden = true;
+  });
+
   stage.addEventListener("pointerdown", function (event) {
-    lastPoint = null;
-    handlePointer(event);
+    if (completed) return;
+    if (stage.setPointerCapture) stage.setPointerCapture(event.pointerId);
+    glow.classList.add("is-visible");
+    moveGlow(event);
+    scratchTo(pointFromEvent(event));
+    hint.hidden = true;
   });
-  revealButton.addEventListener("click", revealAll);
-  replayButton.addEventListener("click", replay);
 
-  function onResize() {
-    generation += 1;
-    window.cancelAnimationFrame(frameTimer);
-    window.clearTimeout(throttleTimer);
-    updateQueued = false;
-    resizeCanvas(true);
-    if (!completed) stage.classList.add("is-ready");
+  function stopStroke() {
+    lastPoint = null;
   }
+  stage.addEventListener("pointerup", stopStroke);
+  stage.addEventListener("pointercancel", stopStroke);
+  stage.addEventListener("pointerleave", function () {
+    stopStroke();
+    glow.classList.remove("is-visible");
+  });
+  revealButton.addEventListener("click", finishReveal);
+  replayButton.addEventListener("click", resetReveal);
 
-  window.addEventListener("resize", onResize, { passive: true });
-  if (window.ResizeObserver) new ResizeObserver(onResize).observe(stage);
-  resizeCanvas(false);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(onResize);
+  window.addEventListener("resize", function () {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(function () {
+      if (!completed) measureAndPaint();
+    }, 150);
+  }, { passive: true });
 
-  if (!reducedMotion.matches) {
-    hintTimer = window.setTimeout(function () {
-      if (completed || !hint || hint.hidden) return;
-      var firstLine = english.querySelector("p").getBoundingClientRect();
-      var bounds = stage.getBoundingClientRect();
-      var start = { x: firstLine.left - bounds.left + 12, y: firstLine.top - bounds.top + 20 };
-      var end = { x: Math.min(firstLine.right - bounds.left, bounds.width - 12), y: start.y };
-      var started = performance.now();
-      function animate(timestamp) {
-        if (completed) return;
-        var progress = Math.min(1, (timestamp - started) / 1800);
-        var point = { x: start.x + (end.x - start.x) * progress, y: start.y };
-        lens.style.opacity = String(1 - Math.max(0, (progress - .78) / .22));
-        lens.style.transform = "translate3d(" + (bounds.left + point.x) + "px," + (bounds.top + point.y) + "px,0) translate(-50%,-50%)";
-        if (progress < .78) paintAt(point);
-        if (progress < 1) hintAnimationId = window.requestAnimationFrame(animate);
-        else {
-          hintAnimationId = 0;
-          window.setTimeout(function () { lens.style.opacity = ""; }, 200);
-        }
-      }
-      hintAnimationId = window.requestAnimationFrame(animate);
-    }, 700);
-  }
+  document.fonts.ready.then(measureAndPaint);
 }());
