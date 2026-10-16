@@ -30,6 +30,9 @@
   var updateQueued = false;
   var lastMaskUpdate = 0;
   var maskUrl = null;
+  var spanishMaskUrl = null;
+  var inverseCanvas = document.createElement("canvas");
+  var inverseContext = inverseCanvas.getContext("2d", { willReadFrequently: true });
   var generation = 0;
   var completed = false;
   var threshold = window.SPANORA.config.revealThreshold;
@@ -84,20 +87,42 @@
         updateQueued = false;
         lastMaskUpdate = performance.now();
         var currentGeneration = ++generation;
-        canvas.toBlob(function (blob) {
-          if (!blob || currentGeneration !== generation || completed) return;
-          var nextUrl = URL.createObjectURL(blob);
+        var pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+        var inversePixels = inverseContext.createImageData(canvas.width, canvas.height);
+        for (var index = 0; index < pixels.data.length; index += 4) {
+          var inverseAlpha = 255 - pixels.data[index + 3];
+          inversePixels.data[index] = 255;
+          inversePixels.data[index + 1] = 255;
+          inversePixels.data[index + 2] = 255;
+          inversePixels.data[index + 3] = inverseAlpha;
+        }
+        inverseContext.putImageData(inversePixels, 0, 0);
+
+        Promise.all([
+          new Promise(function (resolve) { canvas.toBlob(resolve, "image/png"); }),
+          new Promise(function (resolve) { inverseCanvas.toBlob(resolve, "image/png"); })
+        ]).then(function (blobs) {
+          if (!blobs[0] || !blobs[1] || currentGeneration !== generation || completed) return;
+          var nextUrl = URL.createObjectURL(blobs[0]);
+          var nextSpanishUrl = URL.createObjectURL(blobs[1]);
           english.style.maskImage = "url('" + nextUrl + "')";
           english.style.webkitMaskImage = "url('" + nextUrl + "')";
-          english.style.maskSize = "100% 100%";
-          english.style.webkitMaskSize = "100% 100%";
-          english.style.maskRepeat = "no-repeat";
-          english.style.webkitMaskRepeat = "no-repeat";
+          spanish.style.maskImage = "url('" + nextSpanishUrl + "')";
+          spanish.style.webkitMaskImage = "url('" + nextSpanishUrl + "')";
+          [english, spanish].forEach(function (layer) {
+            layer.style.maskSize = "100% 100%";
+            layer.style.webkitMaskSize = "100% 100%";
+            layer.style.maskRepeat = "no-repeat";
+            layer.style.webkitMaskRepeat = "no-repeat";
+            layer.style.maskMode = "alpha";
+          });
           if (!completed) english.style.opacity = "";
           if (maskUrl) URL.revokeObjectURL(maskUrl);
+          if (spanishMaskUrl) URL.revokeObjectURL(spanishMaskUrl);
           maskUrl = nextUrl;
+          spanishMaskUrl = nextSpanishUrl;
           checkCoverage();
-        }, "image/png");
+        });
       });
     }, Math.max(0, 33 - (now - lastMaskUpdate)));
   }
@@ -116,7 +141,10 @@
     var height = Math.max(1, Math.ceil(bounds.height * scale));
     canvas.width = width;
     canvas.height = height;
+    inverseCanvas.width = width;
+    inverseCanvas.height = height;
     context = canvas.getContext("2d", { willReadFrequently: true });
+    inverseContext = inverseCanvas.getContext("2d", { willReadFrequently: true });
     context.setTransform(scale, 0, 0, scale, 0, 0);
     if (previous) context.drawImage(previous, 0, 0, previous.width, previous.height, 0, 0, bounds.width, bounds.height);
     buildSamples();
@@ -167,6 +195,8 @@
     stage.classList.remove("is-ready");
     english.style.maskImage = "none";
     english.style.webkitMaskImage = "none";
+    spanish.style.maskImage = "none";
+    spanish.style.webkitMaskImage = "none";
     english.setAttribute("aria-hidden", "false");
     english.classList.add("is-fading");
     english.style.opacity = "1";
@@ -219,6 +249,8 @@
     spanish.style.transition = "";
     english.style.maskImage = "none";
     english.style.webkitMaskImage = "none";
+    spanish.style.maskImage = "none";
+    spanish.style.webkitMaskImage = "none";
     english.style.opacity = "0";
     english.classList.remove("is-fading");
     english.setAttribute("aria-hidden", "true");

@@ -1,9 +1,9 @@
 .intro__stage { position: relative; display: grid; isolation: isolate; touch-action: pan-y; }
-.intro__layer { grid-area: 1 / 1; align-self: start; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.12rem, 2vw, 1.35rem); line-height: 1.85; }
+.intro__layer { grid-area: 1 / 1; align-self: stretch; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.12rem, 2vw, 1.35rem); line-height: 1.85; }
 .intro__layer p { margin: 0 0 1.3rem; }
 .intro__layer p:last-child { margin-bottom: 0; }
-.intro__layer--es { position: relative; z-index: 0; }
-.intro__layer--en { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+.intro__layer--en { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+.intro__layer--es { position: relative; z-index: 1; }
 .intro__stage.is-ready .intro__layer--en { opacity: 1; }
 .intro__stage.is-ready { cursor: none; }
 .intro__stage.is-fallback { display: block; cursor: auto; }

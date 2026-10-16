@@ -1,6 +1,7 @@
 window.SPANORA = {
   config: {
     email: "Conecta@spanora.info",
+    whatsapp: "201110827032",
     currency: "EGP",
     currencyPlaceholder: true,
     showTestimonialPlaceholders: true,
@@ -110,7 +111,7 @@ window.SPANORA = {
   faqs: [
     { question: "How do I choose the right course for me?", answer: "Start with your goals. Think about why you want to learn Spanish, what motivates you, and how you like to learn. If you're unsure, contact us and we'll help you find the best fit." },
     { question: "How long does it take to learn Spanish?", answer: "It depends on your starting level, your goals, how often you practise, and the course you choose. Learning a language takes time, but consistent practice and the right approach lead to steady progress." },
-    { question: "How do I know my Spanish level?", answer: "Send us an email and we'll reply with a short placement test to find your exact level, so you start in the right place." },
+    { question: "How do I know my Spanish level?", answer: "Email or WhatsApp us and we'll reply with a short placement test to find your exact level, so you start in the right place." },
     { question: "Are the courses online or in person?", answer: "All our courses are online. Amo la Lectura and Via Entrenamiento run live on Google Meet. The LCP and Spanora for Professionals are also taught online, and recordings of the sessions are available on request. We don't offer in-person courses at the moment." },
     { question: "Do I receive a certificate after completing a course?", answer: "Our courses prepare you for the DELE exam, the official Spanish certification issued by Instituto Cervantes. Spanora doesn't issue its own certificates at the moment." },
     { question: "How can I register for a course?", answer: "Get in touch with us to explore the available courses, find the right fit for your goals, and learn about registration, schedules, and fees." },

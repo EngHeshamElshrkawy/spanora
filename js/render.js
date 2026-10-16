@@ -3,6 +3,7 @@
 
   var data = window.SPANORA;
   var email = data.config.email;
+  var whatsappNumber = data.config.whatsapp.replace(/\D/g, "");
   var params = new URLSearchParams(window.location.search);
   if (params.has("dev")) document.body.classList.add("is-dev");
 
@@ -18,17 +19,29 @@
       "&body=" + encodeURIComponent(body);
   }
 
+  function whatsappLink(message) {
+    return "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+  }
+
   var genericLink = mailto("Spanora enquiry", "Hello Spanora,\n\nI'd like to know more about your courses.");
   var placementLink = mailto(
     "Spanora placement test request",
     "Hello Spanora,\n\nI'd like to request a placement test.\n\nMy name:\nMy goals for learning Spanish:\nMy previous Spanish study:"
   );
+  var genericWhatsAppLink = whatsappLink("Hello Spanora, I'd like to know more about your courses.");
+  var placementWhatsAppLink = whatsappLink("Hello Spanora, I'd like to request a placement test. My name is: My goals for learning Spanish: My previous Spanish study:");
 
   document.querySelectorAll('[data-mailto="generic"]').forEach(function (link) {
     link.href = genericLink;
   });
   document.querySelectorAll('[data-mailto="placement"]').forEach(function (link) {
     link.href = placementLink;
+  });
+  document.querySelectorAll('[data-whatsapp="generic"]').forEach(function (link) {
+    link.href = genericWhatsAppLink;
+  });
+  document.querySelectorAll('[data-whatsapp="placement"]').forEach(function (link) {
+    link.href = placementWhatsAppLink;
   });
 
   document.querySelector("[data-intro-es]").innerHTML = data.intro.paragraphs.map(function (paragraph) {
@@ -52,7 +65,6 @@
     '</p><h3 class="visually-hidden">Credentials</h3><div class="credentials">' + credentials + "</div></div>";
 
   document.querySelector("[data-programs]").innerHTML = data.programs.map(function (program) {
-    var programTitle = program.name + (program.acronym ? " — " + program.acronym : "");
     var fees = program.fees.map(function (fee) {
       var level = fee.label || fee.level;
       var price = new Intl.NumberFormat("en").format(fee.price) + " " + escapeHtml(data.config.currency);
@@ -79,7 +91,9 @@
       fees + "</tbody></table><a class=\"button button--secondary\" href=\"" +
       escapeHtml(mailto("Spanora enquiry: " + program.name, "Hello Spanora,\n\nI'm interested in " + program.name +
         ".\nMy name:\nMy current Spanish level (if known):\nPreferred schedule:")) +
-      '">Enroll / ask about this program</a></article>';
+      '">Enroll / ask about this program by email</a><a class="button" href="' +
+      escapeHtml(whatsappLink("Hello Spanora, I'm interested in " + program.name + ". My name is: My current Spanish level (if known): My preferred schedule:")) +
+      '">Ask about this program on WhatsApp</a></article>';
   }).join("");
 
   var testimonialRegion = document.querySelector("[data-testimonials]");
@@ -96,7 +110,8 @@
   document.querySelector("[data-faq]").innerHTML = data.faqs.map(function (item, index) {
     return '<details class="faq-item"><summary>' + escapeHtml(item.question) +
       '</summary><div class="faq-item__answer"><p>' + escapeHtml(item.answer) +
-      (index === 2 ? ' <a href="' + escapeHtml(placementLink) + '">Request your placement test.</a>' : "") +
+      (index === 2 ? ' <a href="' + escapeHtml(placementLink) + '">Request it by email</a> or <a href="' +
+        escapeHtml(placementWhatsAppLink) + '">WhatsApp us</a>.' : "") +
       "</p></div></details>";
   }).join("");
 
