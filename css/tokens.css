@@ -1,0 +1,21 @@
+:root {
+  color-scheme: light;
+  --cream: #FFF6E8;
+  --peach: #FFE3C4;
+  --rose: #F0455C;
+  --red: #B80F2E;
+  --gold: #FFD25A;
+  --caramel: #C97A12;
+  --ink: #2B1B1F;
+  --muted: #735B53;
+  --orange: #F29A2E;
+  --red-gradient: linear-gradient(145deg, var(--rose), var(--red));
+  --gold-gradient: linear-gradient(135deg, var(--gold), var(--orange));
+  --page-wash:
+    radial-gradient(ellipse at 12% 88%, rgb(242 154 46 / 12%), transparent 32rem),
+    radial-gradient(ellipse at 92% 6%, rgb(240 69 92 / 9%), transparent 30rem);
+  --content-width: 1120px;
+  --header-height: 82px;
+  --radius-card: 24px;
+  --shadow-soft: 0 24px 40px rgb(89 39 22 / 10%);
+}

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Spanora flamenco dancer S icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF6E8"/>
+      <stop offset="1" stop-color="#FFE3C4"/>
+    </linearGradient>
+    <linearGradient id="red" gradientUnits="userSpaceOnUse" x1="150" y1="80" x2="380" y2="480">
+      <stop offset="0" stop-color="#F0455C"/>
+      <stop offset="1" stop-color="#B80F2E"/>
+    </linearGradient>
+    <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="220" y1="60" x2="400" y2="160">
+      <stop offset="0" stop-color="#FFD25A"/>
+      <stop offset="1" stop-color="#F29A2E"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M292 290c84 34 112 130 38 168q-30 28-60 4-32 26-62 4-32 22-60-4c-16-10-22-24-12-36 20 14 40 14 60 4 40-20 68-58 68-98z" fill="url(#red)"/>
+  <g fill="none" stroke="#FFE3C4" stroke-opacity=".7" stroke-width="5" stroke-linecap="round">
+    <path d="M302 346c18 30 18 58 2 82"/>
+    <path d="M270 366c16 28 14 56-6 78"/>
+    <path d="M232 392c12 22 6 46-16 62"/>
+  </g>
+  <path d="m356 108-11.9-44.4a46 46 0 0 1 56.3 32.5z" fill="url(#gold)"/>
+  <g stroke="#C97A12" stroke-width="2.5" stroke-linecap="round">
+    <path d="M356 108V62m0 46 11.9-44.4m-11.9 44.4 23-39.8m-23 39.8 32.5-32.5m-32.5 32.5 39.8-23"/>
+  </g>
+  <path d="M344.1 63.6a46 46 0 0 1 56.3 32.5" fill="none" stroke="#D92141" stroke-width="4" stroke-linecap="round"/>
+  <path d="M350 112c-52-50-178-40-182 58-4 68 76 92 134 142" fill="none" stroke="url(#red)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M262 208c0 22-10 36-24 48" fill="none" stroke="url(#red)" stroke-width="20" stroke-linecap="round"/>
+  <path d="m262 182-39.9-18.6a44 44 0 0 1 51.3-23.9z" fill="url(#gold)"/>
+  <g stroke="#C97A12" stroke-width="2.5" stroke-linecap="round">
+    <path d="m262 182-31.1-31.1m31.1 31.1-18.6-39.9m18.6 39.9-3.8-43.8"/>
+  </g>
+  <circle cx="262" cy="184" r="25" fill="#2B1B1F"/>
+  <g transform="translate(284 176)">
+    <circle cx="-7" cy="-5" r="9" fill="#E8344E"/>
+    <circle cx="8" cy="-3" r="9" fill="#D92141"/>
+    <circle cy="8" r="9" fill="#C8102E"/>
+    <circle r="5" fill="#FFC233"/>
+  </g>
+</svg>

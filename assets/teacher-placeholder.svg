@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 560" role="img" aria-label="Illustrated teacher portrait placeholder">
+  <rect width="480" height="560" fill="#FFE3C4"/>
+  <circle cx="380" cy="92" r="92" fill="#FFD25A" opacity=".6"/>
+  <path d="M47 517c10-122 88-189 193-189s183 67 193 189v43H47z" fill="#B80F2E"/>
+  <path d="M155 336c16-50 53-75 85-75s69 25 85 75l-85 70z" fill="#FFF6E8"/>
+  <path d="M153 226c0-91 39-137 87-137 58 0 91 48 91 137 0 77-42 125-91 125s-87-50-87-125z" fill="#2B1B1F"/>
+  <ellipse cx="240" cy="225" rx="70" ry="86" fill="#F2B98E"/>
+  <path d="M168 207c1-93 41-136 91-136 35 0 68 16 81 64-46-10-92-25-172 72z" fill="#2B1B1F"/>
+  <path d="M206 231h2m62 0h2" stroke="#2B1B1F" stroke-linecap="round" stroke-width="8"/>
+  <path d="M220 272c13 10 27 10 40 0" stroke="#B80F2E" stroke-linecap="round" stroke-width="5"/>
+  <path d="M197 104c13-39 56-55 87-38 21 11 29 28 32 53" fill="none" stroke="#F0455C" stroke-linecap="round" stroke-width="18"/>
+  <text x="240" y="485" fill="#FFF6E8" font-family="Georgia,serif" font-size="22" text-anchor="middle">Teacher portrait</text>
+</svg>

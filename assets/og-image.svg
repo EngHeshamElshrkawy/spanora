@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Spanora online Spanish courses">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1">
+      <stop stop-color="#FFF6E8"/>
+      <stop offset="1" stop-color="#FFE3C4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1000" cy="310" r="270" fill="none" stroke="#C97A12" stroke-opacity=".22"/>
+  <circle cx="1000" cy="310" r="220" fill="none" stroke="#B80F2E" stroke-opacity=".12"/>
+  <text x="90" y="170" fill="#B80F2E" font-family="Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="7">ONLINE SPANISH · LANGUAGE, CULTURE, PEOPLE</text>
+  <text x="90" y="300" fill="#2B1B1F" font-family="Georgia,serif" font-size="96">SPANORA</text>
+  <text x="90" y="380" fill="#B80F2E" font-family="Georgia,serif" font-size="34" font-style="italic">Tus metas marcan el camino y tus intereses</text>
+  <text x="90" y="430" fill="#B80F2E" font-family="Georgia,serif" font-size="34" font-style="italic">hacen tuyo el viaje.</text>
+  <text x="90" y="535" fill="#735B53" font-family="Arial,sans-serif" font-size="22">Structured courses · reading · film &amp; music · professional Spanish</text>
+  <path d="M928 310c80 34 106 122 37 160q-29 25-58 4-31 24-60 4-30 21-56-4c-14-10-19-22-10-33 19 12 37 12 56 3 38-19 64-54 64-92z" fill="#B80F2E"/>
+  <circle cx="894" cy="160" r="18" fill="#2B1B1F"/>
+  <path d="M975 113c-51-49-164-36-168 53-4 61 69 83 121 128" fill="none" stroke="#F0455C" stroke-linecap="round" stroke-width="27"/>
+  <path d="m974 110-11-39a41 41 0 0 1 50 29z" fill="#FFD25A" stroke="#C97A12" stroke-width="4"/>
+</svg>

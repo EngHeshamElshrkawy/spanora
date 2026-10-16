@@ -1,0 +1,32 @@
+.intro__stage { position: relative; display: grid; isolation: isolate; touch-action: pan-y; }
+.intro__layer { grid-area: 1 / 1; align-self: start; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.12rem, 2vw, 1.35rem); line-height: 1.85; }
+.intro__layer p { margin: 0 0 1.3rem; }
+.intro__layer p:last-child { margin-bottom: 0; }
+.intro__layer--es { position: relative; z-index: 0; }
+.intro__layer--en { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+.intro__stage.is-ready .intro__layer--en { opacity: 1; }
+.intro__stage.is-ready { cursor: none; }
+.intro__stage.is-fallback { display: block; cursor: auto; }
+.intro__stage.is-fallback .intro__layer--en { position: static; margin-top: 2rem; opacity: 1; }
+.intro__stage.is-fallback .intro__layer--en::before { display: block; margin-bottom: .7rem; color: var(--red); content: "English translation"; font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif; font-size: .75rem; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; }
+.intro__stage.is-complete { cursor: auto; }
+.intro__layer--en.is-fading { transition: opacity .6s ease; }
+.lens { --lens-size: 200px; position: fixed; z-index: 30; top: 0; left: 0; width: var(--lens-size); height: var(--lens-size); display: none; border: 10px solid transparent; border-radius: 50%; background: linear-gradient(rgb(255 227 196 / 18%), rgb(255 227 196 / 18%)) padding-box, var(--gold-gradient) border-box; box-shadow: 0 0 0 2px rgb(201 122 18 / 50%), 0 0 40px rgb(255 210 90 / 45%), 0 12px 24px rgb(43 27 31 / 17%); pointer-events: none; transform: translate3d(-50%, -50%, 0); }
+.lens::after { position: absolute; right: -39px; bottom: -25px; width: 65px; height: 13px; border: 2px solid var(--cream); border-radius: 99px; background: linear-gradient(90deg, var(--caramel), var(--ink)); box-shadow: 0 2px 6px rgb(43 27 31 / 25%); content: ""; transform: rotate(48deg); transform-origin: left center; }
+.lens--torch { border: 0; background: radial-gradient(circle, rgb(255 246 232 / 28%) 0, rgb(255 210 90 / 19%) 57%, transparent 72%); box-shadow: 0 0 40px rgb(255 210 90 / 48%); }
+.lens--torch::after { display: none; }
+.intro__stage.is-ready .lens { display: block; }
+.intro__stage.is-complete .lens { opacity: 0; transform: translate3d(-50%, -50%, 0) scale(.4); transition: opacity .35s ease, transform .35s ease; }
+.lens-hint { min-height: 1.2rem; margin: .5rem 0 0; color: var(--muted); font-size: .78rem; text-align: center; }
+.intro__tools { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+.intro__done { max-width: 720px; margin: 1.5rem auto 0; color: var(--red); font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.35rem, 3vw, 2rem); font-style: italic; text-align: center; }
+.intro__done:not([hidden]) { animation: message-in .6s ease both; }
+.intro__done:not([hidden])::after { display: block; width: min(60%, 270px); height: 3px; margin: .5rem auto 0; background: var(--gold); content: ""; transform-origin: left; animation: underline-in .65s .2s ease both; }
+@keyframes message-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes underline-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 700px) {
+  .lens { --lens-size: 150px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro__done:not([hidden]), .intro__done:not([hidden])::after { animation: none; }
+}
