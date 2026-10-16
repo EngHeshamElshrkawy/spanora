@@ -86,7 +86,6 @@
             <div class="visually-hidden" lang="es" data-intro-es></div>
             <canvas class="intro__canvas" data-intro-canvas aria-hidden="true"></canvas>
           </div>
-          <div class="torch-glow" data-torch-glow aria-hidden="true"></div>
           <p class="lens-hint" data-lens-hint aria-hidden="true">Move the torch over the text to scratch away the Spanish</p>
           <div class="intro__tools">
             <button class="text-button" type="button" data-reveal-all>Read it in English <span aria-hidden="true">→</span></button>
@@ -142,6 +141,9 @@
         </div>
       </section>
     </main>
+    <!-- Kept outside the sections: their reveal animation sets a transform, which would make this
+         position: fixed glow track the section instead of the viewport. -->
+    <div class="torch-glow" data-torch-glow aria-hidden="true"></div>
     <footer class="site-footer">
       <div class="container footer-grid">
         <a class="brand" href="#top" aria-label="Spanora home"><img src="./assets/logo.svg" width="38" height="38" alt=""><span>SPANORA</span></a>
