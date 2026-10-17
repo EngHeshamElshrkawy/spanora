@@ -28,9 +28,13 @@
     }
   });
 
-  window.addEventListener("scroll", function () {
+  var backToTop = document.querySelector("[data-back-to-top]");
+  function onScroll() {
     header.classList.toggle("is-scrolled", window.scrollY > 4);
-  }, { passive: true });
+    if (backToTop) backToTop.classList.toggle("is-visible", window.scrollY > window.innerHeight * 0.9);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
   if ("IntersectionObserver" in window) {
     var observer = new IntersectionObserver(function (entries) {

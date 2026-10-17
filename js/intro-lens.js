@@ -29,7 +29,18 @@
   var threshold = window.SPANORA.config.revealThreshold || 0.9;
   var coverColor = "#FFEED9";
   var feather = 24;
-  var spanishColor = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim() || "#735B53";
+  var stageStyle = getComputedStyle(stage);
+  var spanishColor = stageStyle.getPropertyValue("--intro-es-fill").trim()   || "#E4566C";
+    var spanishStroke = stageStyle.getPropertyValue("--intro-es-stroke").trim() || "#9E1A33";
+    var spanishStrokeWidth = parseFloat(stageStyle.getPropertyValue("--intro-es-stroke-width")) || 0.6;
+
+  // A copy of the English text that is only visible inside the torch's circle of light.
+  var litEnglish = english.cloneNode(true);
+  litEnglish.removeAttribute("data-intro-en");
+  litEnglish.removeAttribute("lang");
+  litEnglish.setAttribute("aria-hidden", "true");
+  litEnglish.classList.add("intro__layer--lit");
+  english.insertAdjacentElement("afterend", litEnglish);
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   var spanishParagraphs = [];
@@ -137,6 +148,10 @@
     context.textAlign = style.textAlign === "start" ? "left" : style.textAlign;
     paintCover(width, stageHeight);
     context.fillStyle = spanishColor;
+    context.strokeStyle = spanishStroke;
+    // Stroke is centred on the glyph edge and the fill covers its inner half, so double it.
+    context.lineWidth = spanishStrokeWidth * 2;
+    context.lineJoin = "round";
 
     // Place the baseline where CSS does: the font's content box is centred in the line box,
     // so the Spanish lines sit exactly on the English lines underneath.
@@ -148,6 +163,7 @@
     var y = 0;
     spanishLayout.forEach(function (paragraph, index) {
       paragraph.lines.forEach(function (line) {
+        context.strokeText(line, 0, y + baselineOffset);
         context.fillText(line, 0, y + baselineOffset);
         y += lineHeight;
       });
@@ -272,6 +288,10 @@
     frameRequested = false;
     if (pendingGlow) {
       glow.style.transform = "translate3d(" + pendingGlow.x + "px, " + pendingGlow.y + "px, 0) translate(-50%, -50%)";
+      var stageBounds = stage.getBoundingClientRect();
+      stage.style.setProperty("--torch-x", pendingGlow.x - stageBounds.left + "px");
+      stage.style.setProperty("--torch-y", pendingGlow.y - stageBounds.top + "px");
+      stage.style.setProperty("--torch-radius", glow.offsetWidth / 2 + "px");
       pendingGlow = null;
     }
     if (completed || !pendingPoints.length) {
@@ -301,6 +321,11 @@
     requestFrame();
   }
 
+  function setTorch(visible) {
+    glow.classList.toggle("is-visible", visible);
+    stage.classList.toggle("is-lit", visible);
+  }
+
   function hideHint() {
     if (hintHidden) return;
     hintHidden = true;
@@ -316,7 +341,7 @@
     revealButton.hidden = true;
     replayButton.hidden = false;
     hint.hidden = true;
-    glow.classList.remove("is-visible");
+    setTorch(false);
     lastPoint = null;
   }
 
@@ -329,13 +354,13 @@
     revealButton.hidden = false;
     replayButton.hidden = true;
     english.setAttribute("aria-hidden", "true");
-    glow.classList.remove("is-visible");
+    setTorch(false);
     measureAndPaint();
   }
 
   stage.addEventListener("pointerenter", function (event) {
     if (completed) return;
-    glow.classList.add("is-visible");
+    setTorch(true);
     moveGlow(event);
     stopStroke();
   });
@@ -350,7 +375,7 @@
   stage.addEventListener("pointerdown", function (event) {
     if (completed) return;
     if (stage.setPointerCapture) stage.setPointerCapture(event.pointerId);
-    glow.classList.add("is-visible");
+    setTorch(true);
     moveGlow(event);
     queueScratch(event);
     hideHint();
@@ -365,7 +390,7 @@
   stage.addEventListener("pointercancel", stopStroke);
   stage.addEventListener("pointerleave", function () {
     stopStroke();
-    glow.classList.remove("is-visible");
+    setTorch(false);
   });
   revealButton.addEventListener("click", finishReveal);
   replayButton.addEventListener("click", resetReveal);
@@ -385,12 +410,12 @@
       lastClient.clientY >= bounds.top && lastClient.clientY <= bounds.bottom;
     if (inside) {
       if (!torchOverStage) stopStroke();
-      glow.classList.add("is-visible");
+      setTorch(true);
       moveGlow(lastClient);
       queueScratch(lastClient);
     } else if (torchOverStage) {
       stopStroke();
-      glow.classList.remove("is-visible");
+      setTorch(false);
     }
     torchOverStage = inside;
   }, { passive: true });
@@ -405,5 +430,9 @@
     }, 150);
   }, { passive: true });
 
-  document.fonts.ready.then(measureAndPaint);
+  // The canvas can only paint with a web font once it has loaded, so wait for the intro font explicitly.
+  var introFont = window.getComputedStyle(english.querySelector("p") || english).font;
+  Promise.resolve(document.fonts.load(introFont)).catch(function () {}).then(function () {
+    return document.fonts.ready;
+  }).then(measureAndPaint);
 }());

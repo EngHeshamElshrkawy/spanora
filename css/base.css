@@ -5,7 +5,7 @@ body {
   margin: 0;
   background: var(--page-wash), var(--cream);
   color: var(--ink);
-  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -17,10 +17,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 ::selection { background: var(--gold); color: var(--ink); }
 .container { width: min(calc(100% - 3rem), var(--content-width)); margin-inline: auto; }
 .container--narrow { max-width: 850px; }
-.section { padding: clamp(5rem, 10vw, 8.5rem) 0; scroll-margin-top: calc(var(--header-height) + 1rem); }
+.section { padding: clamp(4rem, 8vw, 6.5rem) 0; scroll-margin-top: calc(var(--header-height) + 1rem); }
 .section--peach { background: rgb(255 227 196 / 42%); }
 h1, h2, h3, p { margin-top: 0; }
-h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
 h1 { max-width: 720px; margin-bottom: 1.3rem; font-size: clamp(3.2rem, 8vw, 6.5rem); letter-spacing: -.065em; line-height: .99; }
 h2 { max-width: 800px; margin-bottom: 2.4rem; font-size: clamp(2rem, 4.5vw, 3.4rem); letter-spacing: -.045em; line-height: 1.08; }
 h2 em, h1 .accent { color: var(--red); font-style: italic; }

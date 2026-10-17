@@ -15,6 +15,9 @@
     <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
     <link rel="icon" href="./assets/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..800&amp;family=Lora:ital,wght@0,400..700;1,400..700&amp;family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;display=swap">
     <link rel="stylesheet" href="./css/tokens.css">
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/components.css">
@@ -62,17 +65,52 @@
       <section class="hero section" id="top" aria-labelledby="hero-title">
         <div class="container hero__grid">
           <div class="hero__copy">
-            <p class="eyebrow">Online Spanish <span aria-hidden="true">·</span> Language, culture, people</p>
+            <p class="eyebrow"><span>Online Spanish <span aria-hidden="true">·</span> Language, culture, people</span></p>
             <h1 id="hero-title" class="hero__logo"><img src="./assets/wordmark-es.svg" width="470" height="194" alt="Spanora" title="Your goals mark the way, and your interests make the journey yours."></h1>
             <p class="visually-hidden" lang="es">Tus metas marcan el camino y tus intereses hacen tuyo el viaje. <span lang="en">Your goals mark the way, and your interests make the journey yours.</span></p>
             <p class="hero__description">Learn Spanish with a little more culture, a lot more curiosity, and a path shaped around you.</p>
             <div class="button-row">
               <a class="button" href="#programs">Explore programs</a>
               <a class="button button--secondary" data-mailto="placement" href="mailto:Conecta@spanora.info">Find your level</a>
-              <a class="button" data-whatsapp="placement" href="https://wa.me/2011108327042">Ask on WhatsApp</a>
+              <a class="button button--whatsapp" data-whatsapp="placement" href="https://wa.me/2011108327042">WhatsApp us</a>
             </div>
           </div>
-          <div class="hero__art" aria-hidden="true"><img src="./assets/logo.svg" width="520" height="520" alt=""></div>
+          <div class="hero__art" aria-hidden="true">
+            <svg class="hero__swan" viewBox="0 0 200 200" width="520" height="520" focusable="false">
+              <defs>
+                <path id="swan-neck" d="M146 60 C142 30 100 22 78 38 C56 54 62 80 94 92 C116 100 134 106 140 118"/>
+                <path id="swan-body" d="M128 96 C150 104 162 120 158 138 C152 160 116 166 86 160 C66 156 48 148 34 136 C62 140 84 136 100 128 C116 120 124 110 128 96 Z"/>
+              </defs>
+              <g class="swan__ripples" fill="none" stroke-linecap="round">
+                <ellipse class="swan__ripple" cx="98" cy="182" rx="62" ry="5" stroke="#C97A12"/>
+                <ellipse class="swan__ripple swan__ripple--late" cx="98" cy="182" rx="62" ry="5" stroke="#B80F2E"/>
+              </g>
+              <g class="swan__float">
+                <g transform="translate(0 -9)">
+                  <g class="swan__ruffle" stroke="#2B1B1F" stroke-width="5" stroke-linejoin="round">
+                    <path fill="#D7263D" d="M156 136 C168 150 178 166 172 178 C166 186 158 182 156 178 C154 190 140 192 138 182 C132 194 118 194 116 184 C110 194 96 192 94 182 C88 190 72 188 72 178 C62 186 46 180 50 170 C38 172 26 164 30 154 C20 152 12 142 16 134 L60 144 Z"/>
+                    <path fill="#FFC72C" d="M152 140 C160 150 166 160 162 168 C158 174 150 170 148 166 C146 176 134 178 132 170 C128 180 114 180 112 172 C108 180 94 178 92 170 C86 176 72 174 72 166 C62 170 50 164 54 156 L70 148 Z"/>
+                  </g>
+                  <use href="#swan-neck" fill="none" stroke="#2B1B1F" stroke-width="28" stroke-linecap="round"/>
+                  <use href="#swan-body" fill="#2B1B1F" stroke="#2B1B1F" stroke-width="10" stroke-linejoin="round"/>
+                  <ellipse cx="146" cy="62" rx="16" ry="13" transform="rotate(30 146 62)" fill="#2B1B1F" stroke="#2B1B1F" stroke-width="10"/>
+                  <use href="#swan-neck" fill="none" stroke="#D7263D" stroke-width="18" stroke-linecap="round"/>
+                  <use href="#swan-body" fill="#D7263D"/>
+                  <ellipse cx="146" cy="62" rx="16" ry="13" transform="rotate(30 146 62)" fill="#D7263D"/>
+                  <g class="swan__beak">
+                    <path d="M152 68 L168 90 L158 88 L146 76 Z" fill="#FFC72C" stroke="#2B1B1F" stroke-width="4" stroke-linejoin="round"/>
+                    <path d="M168 90 L161 89 L159 83 Z" fill="#2B1B1F" stroke="#2B1B1F" stroke-width="4" stroke-linejoin="round"/>
+                  </g>
+                  <circle class="swan__eye" cx="146" cy="58" r="3.2" fill="#2B1B1F"/>
+                  <g class="swan__wing" fill="none" stroke="#FFC72C" stroke-width="4" stroke-linecap="round">
+                    <path d="M144 118 c4 6 4 12 1 18"/>
+                    <path d="M126 130 c4 6 3 11 -1 16"/>
+                    <path d="M86 146 c8 -4 16 -6 24 -6"/>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
           <a class="scroll-cue" href="#intro"><span aria-hidden="true">↓</span> Scroll to discover</a>
         </div>
       </section>
@@ -128,15 +166,16 @@
           <h2 id="contact-title">Let’s find <em>your level.</em></h2>
           <p>Message us on WhatsApp or email. We’ll help you choose a program, send you a placement test, and share schedules and fees.</p>
           <div class="contact-actions">
-            <a class="button" data-whatsapp="generic" href="https://wa.me/2011108327042">Chat on WhatsApp</a>
-            <a class="button button--secondary" data-mailto="generic" href="mailto:Conecta@spanora.info">Email Conecta@spanora.info</a>
+            <a class="button button--whatsapp" data-whatsapp="generic" href="https://wa.me/2011108327042">Chat on WhatsApp</a>
+            <a class="button button--secondary" data-mailto="generic" href="mailto:Conecta@spanora.info">Send an email</a>
           </div>
-          <div class="email-copy">
+          <div class="contact-details">
             <a href="mailto:Conecta@spanora.info">Conecta@spanora.info</a>
-            <button type="button" class="text-button" data-copy-email aria-label="Copy email address">Copy email</button>
+            <button type="button" class="text-button" data-copy-email aria-label="Copy email address">Copy</button>
+            <span class="contact-details__sep" aria-hidden="true">·</span>
+            <a data-whatsapp="generic" href="https://wa.me/2011108327042"><span class="visually-hidden">WhatsApp: </span>+20 111 083 27042</a>
             <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
           </div>
-          <p class="contact-whatsapp"><a data-whatsapp="generic" href="https://wa.me/2011108327042">WhatsApp: +20 111 083 27042</a></p>
         </div>
       </section>
     </main>
@@ -145,12 +184,27 @@
     <div class="torch-glow" data-torch-glow aria-hidden="true"></div>
     <footer class="site-footer">
       <div class="container footer-grid">
-        <a class="footer-logo" href="#top" aria-label="Spanora home"><img src="./assets/logo-en.svg" width="536" height="250" alt=""></a>
-        <a href="mailto:Conecta@spanora.info">Conecta@spanora.info</a>
-        <a data-whatsapp="generic" href="https://wa.me/2011108327042">WhatsApp</a>
+        <div class="footer-brand">
+          <a class="footer-logo" href="#top" aria-label="Spanora home"><img src="./assets/logo-en.svg" width="536" height="250" alt=""></a>
+          <p class="footer-blurb">Online Spanish courses in language, literature, culture and professional communication.</p>
+        </div>
+        <nav class="footer-col" aria-label="Footer">
+          <h2 class="footer-heading">Explore</h2>
+          <a href="#intro">Our story</a>
+          <a href="#teacher">Teacher</a>
+          <a href="#programs">Programs</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="footer-col">
+          <h2 class="footer-heading">Get in touch</h2>
+          <a href="mailto:Conecta@spanora.info">Conecta@spanora.info</a>
+          <a data-whatsapp="generic" href="https://wa.me/2011108327042">WhatsApp</a>
+          <a href="#contact">Find your level</a>
+        </div>
         <p class="footer-small">© <span data-year></span> Spanora <span class="footer-flourish" aria-hidden="true">✳</span> Made with a little extra warmth</p>
       </div>
     </footer>
+    <a class="back-to-top" href="#top" data-back-to-top aria-label="Back to top"><span aria-hidden="true">↑</span></a>
     <noscript>
       <div class="noscript-note">
         <h2>Welcome to Spanora</h2>

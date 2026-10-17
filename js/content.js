@@ -45,6 +45,7 @@ window.SPANORA = {
     {
       name: "Traditional Spanora Course",
       acronym: "LCP",
+      icon: "cap",
       label: "Language Core Program",
       description: [
         "Our Traditional Spanora Course follows a structured and effective language learning path. Each session includes a balanced combination of grammar, reading, listening, and writing, designed to build a strong and lasting foundation in Spanish.",
@@ -62,6 +63,7 @@ window.SPANORA = {
       name: "Amo la Lectura",
       acronym: "",
       label: "Spanora Reading Program",
+      icon: "book",
       description: [
         "Learn Spanish through the power of literature. In this program, we explore carefully selected Spanish texts and books together, using them as a gateway to language mastery.",
         "Students develop reading fluency, pronunciation, vocabulary, and grammatical awareness while discovering the richness of Spanish-speaking cultures and authors. It is an immersive and intellectually stimulating way to learn the language."
@@ -78,6 +80,7 @@ window.SPANORA = {
       name: "Via Entrenamiento",
       acronym: "",
       label: "Spanora Immersion Program",
+      icon: "music",
       description: [
         "An energetic and interactive approach to learning Spanish through films, music, and real media. Together we watch movies, analyze song lyrics, and naturally absorb vocabulary, grammar, and pronunciation along the way.",
         "This course helps students develop practical communication skills quickly and gain a deeper understanding of how Spanish is spoken in real life across different cultures."
@@ -95,6 +98,7 @@ window.SPANORA = {
       name: "Spanora for Professionals",
       acronym: "",
       label: "Professional Spanish",
+      icon: "briefcase",
       description: [
         "A specialized program designed for professionals who wish to enter Spanish-speaking work environments with confidence.",
         "This course focuses on professional vocabulary, workplace communication, presentations, and industry-relevant language skills to help you navigate international opportunities effectively."

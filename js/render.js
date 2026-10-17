@@ -64,6 +64,13 @@
     "<h3>" + escapeHtml(teacher.name) + "</h3><p class=\"teacher-bio\">" + escapeHtml(teacher.bio) +
     '</p><h3 class="visually-hidden">Credentials</h3><div class="credentials">' + credentials + "</div></div>";
 
+  var programIcons = {
+    cap: '<path d="M2 9.5 12 4.5l10 5-10 5-10-5Z"/><path d="M6 11.5v4.8c3 2.6 9 2.6 12 0v-4.8"/><path d="M22 9.5V15"/>',
+    book: '<path d="M3.5 5.5C6 4 9.4 4 12 6.2 14.6 4 18 4 20.5 5.5v13.3c-2.5-1.4-5.9-1.4-8.5.7-2.6-2.1-6-2.1-8.5-.7Z"/><path d="M12 6.2v13.3"/>',
+    music: '<path d="M9 17.5V5.5l11-2v12"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/>',
+    briefcase: '<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 7V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2V7"/><path d="M3 12.5h18"/>'
+  };
+
   document.querySelector("[data-programs]").innerHTML = data.programs.map(function (program) {
     var fees = program.fees.map(function (fee) {
       var level = fee.label || fee.level;
@@ -80,20 +87,24 @@
         (fee.level ? " " + escapeHtml(fee.level) : "") +
         '" href="' + escapeHtml(mailto(subject, body)) + '">Ask</a></td></tr>';
     }).join("");
-    return '<article class="program-card"><p class="program-card__label">' + escapeHtml(program.label) +
-      '</p><h3>' + escapeHtml(program.name) + (program.acronym ? ' <span>(' + escapeHtml(program.acronym) + ")</span>" : "") +
+    return '<article class="program-card"><div class="program-card__head">' +
+      (programIcons[program.icon] ? '<span class="program-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
+        programIcons[program.icon] + "</svg></span>" : "") +
+      '<p class="program-card__label">' + escapeHtml(program.label) +
+      '</p></div><h3>' + escapeHtml(program.name) + (program.acronym ? ' <span>(' + escapeHtml(program.acronym) + ")</span>" : "") +
       '</h3><p class="program-card__subtitle">' + escapeHtml(program.acronym ? "Language Core Program" : program.label) +
       '</p><span class="format-badge">' + escapeHtml(program.format) + "</span>" +
       program.description.map(function (paragraph) { return '<p class="program-card__description">' + escapeHtml(paragraph) + "</p>"; }).join("") +
       (program.aside ? '<p class="program-card__aside">' + escapeHtml(program.aside) + "</p>" : "") +
       '<table class="fee-table"><caption>Fees per ' + (program.fees.length === 1 ? "program" : "level") +
       '</caption><thead><tr><th scope="col">Level</th><th scope="col">Fee</th><th scope="col"><span class="visually-hidden">Enquire</span></th></tr></thead><tbody>' +
-      fees + "</tbody></table><a class=\"button button--secondary\" href=\"" +
+      fees + '</tbody></table><div class="program-card__actions"><a class="button button--secondary button--small" href="' +
       escapeHtml(mailto("Spanora enquiry: " + program.name, "Hello Spanora,\n\nI'm interested in " + program.name +
         ".\nMy name:\nMy current Spanish level (if known):\nPreferred schedule:")) +
-      '">Enroll / ask about this program by email</a><a class="button" href="' +
+      '">Enroll by email<span class="visually-hidden">: ' + escapeHtml(program.name) + '</span></a>' +
+      '<a class="button button--whatsapp button--small" href="' +
       escapeHtml(whatsappLink("Hello Spanora, I'm interested in " + program.name + ". My name is: My current Spanish level (if known): My preferred schedule:")) +
-      '">Ask about this program on WhatsApp</a></article>';
+      '">WhatsApp<span class="visually-hidden">: ask about ' + escapeHtml(program.name) + '</span></a></div></article>';
   }).join("");
 
   var testimonialRegion = document.querySelector("[data-testimonials]");
@@ -120,7 +131,7 @@
     var status = document.querySelector("[data-copy-status]");
     function fallbackCopy() {
       var range = document.createRange();
-      var address = document.querySelector(".email-copy a");
+      var address = document.querySelector(".contact-details a");
       range.selectNodeContents(address);
       var selection = window.getSelection();
       selection.removeAllRanges();
