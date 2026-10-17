@@ -61,8 +61,9 @@
 .program-card:nth-child(3) { --program-accent: var(--caramel); }
 .program-card:nth-child(4) { --program-accent: var(--gold); }
 .program-card__head { display: flex; align-items: center; gap: .75rem; margin-bottom: .9rem; }
-.program-card__icon { display: grid; width: 44px; height: 44px; flex: none; place-items: center; border-radius: 14px; background: color-mix(in srgb, var(--program-accent) 16%, transparent); color: var(--ink); }
+.program-card__icon { position: relative; display: grid; width: 44px; height: 44px; flex: none; place-items: center; border-radius: 14px; background: color-mix(in srgb, var(--program-accent) 16%, transparent); color: var(--ink); }
 .program-card__icon svg { width: 24px; height: 24px; }
+.program-card__icon--briefcase::after { position: absolute; top: -5px; right: -5px; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: var(--gold); color: var(--red); content: "✳"; font-size: .7rem; opacity: 0; transform: scale(.4) rotate(-35deg); }
 .program-card__label { margin-bottom: 0; color: var(--muted); font-size: .76rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .program-card h3 { margin-bottom: .15rem; }
 .program-card__subtitle { margin-bottom: 1.2rem; color: var(--red); font-family: var(--font-serif); font-style: italic; }
@@ -172,6 +173,44 @@ body.is-dev .is-placeholder::after { position: absolute; top: .45rem; right: .45
   .credentials { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: no-preference) {
+  .program-card:focus-within .program-card__icon--cap svg { animation: program-cap-toss .65s cubic-bezier(.2, .8, .2, 1); }
+  .program-card:focus-within .program-card__icon--book svg { animation: program-book-open .55s cubic-bezier(.2, .8, .2, 1); }
+  .program-card:focus-within .program-card__icon--music svg { animation: program-music-spin .7s cubic-bezier(.25, .8, .25, 1); }
+  .program-card:focus-within .program-card__icon--briefcase svg { animation: program-briefcase-stamp .48s cubic-bezier(.2, .8, .2, 1); }
+  .program-card:focus-within .program-card__icon--briefcase::after { animation: program-stamp-spark .48s .08s cubic-bezier(.2, .8, .2, 1) both; }
+  @media (hover: hover) {
+    .program-card:hover .program-card__icon--cap svg { animation: program-cap-toss .65s cubic-bezier(.2, .8, .2, 1); }
+    .program-card:hover .program-card__icon--book svg { animation: program-book-open .55s cubic-bezier(.2, .8, .2, 1); }
+    .program-card:hover .program-card__icon--music svg { animation: program-music-spin .7s cubic-bezier(.25, .8, .25, 1); }
+    .program-card:hover .program-card__icon--briefcase svg { animation: program-briefcase-stamp .48s cubic-bezier(.2, .8, .2, 1); }
+    .program-card:hover .program-card__icon--briefcase::after { animation: program-stamp-spark .48s .08s cubic-bezier(.2, .8, .2, 1) both; }
+  }
+  .program-card__icon svg { transform-box: fill-box; transform-origin: center; }
+  @keyframes program-cap-toss {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    38% { transform: translateY(-4px) rotate(-7deg); }
+    70% { transform: translateY(1px) rotate(3deg); }
+  }
+  @keyframes program-book-open {
+    0%, 100% { transform: perspective(80px) rotateY(0) scale(1); }
+    45% { transform: perspective(80px) rotateY(-18deg) scale(.96); }
+    75% { transform: perspective(80px) rotateY(5deg) scale(1.02); }
+  }
+  @keyframes program-music-spin {
+    0%, 100% { transform: rotate(0) scale(1); }
+    45% { transform: rotate(150deg) scale(1.08); }
+    75% { transform: rotate(320deg) scale(.98); }
+  }
+  @keyframes program-briefcase-stamp {
+    0%, 100% { transform: translateY(0) scale(1); }
+    45% { transform: translateY(2px) scale(.88); }
+    75% { transform: translateY(-1px) scale(1.04); }
+  }
+  @keyframes program-stamp-spark {
+    0% { opacity: 0; transform: scale(.4) rotate(-35deg); }
+    55% { opacity: 1; transform: scale(1.15) rotate(15deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+  }
   .footer-warmth { animation: footer-warmth-bounce 1.8s ease-in-out infinite; }
   @keyframes footer-warmth-bounce {
     0%, 100% { transform: translateY(0); }
