@@ -13,7 +13,7 @@ window.SPANORA = {
     en: "Your goals mark the way, and your interests make the journey yours."
   },
   intro: {
-    completion: "This is how easy you're going to be reading Spanish after the course.",
+    completion: "This is how easily you're going to be reading Spanish after the course.",
     paragraphs: [
       {
         es: "Cuando empecé a aprender español, me di cuenta de algo: aprender un idioma no es solo aprender palabras. Es entrar en otra forma de ver el mundo. Pero también sentí que faltaba algo. Faltaba un espacio donde el idioma, la cultura y la vida real se encontraran. Un espacio donde aprender español fuera una experiencia, no una obligación. Yo necesitaba ese espacio. Y con el tiempo, entendí que no era la única. Por eso nació Spanora.",

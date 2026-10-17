@@ -115,6 +115,12 @@
 .footer-col a { color: var(--ink); font-size: .92rem; text-decoration: none; }
 .footer-col a:hover { color: var(--red); text-decoration: underline; }
 .footer-small { grid-column: 1 / -1; display: flex; align-items: center; gap: .5rem; margin: 0; padding-top: 1.4rem; border-top: 1px solid rgb(43 27 31 / 10%); color: var(--muted); font-size: .75rem; }
+.footer-developer { position: relative; }
+.footer-developer summary { cursor: pointer; list-style: none; }
+.footer-developer summary::-webkit-details-marker { display: none; }
+.footer-warmth { display: inline-block; color: var(--red); font-weight: 750; }
+.footer-developer__card { position: absolute; z-index: 5; right: 0; bottom: calc(100% + .75rem); display: grid; width: min(18rem, calc(100vw - 2.5rem)); gap: .35rem; padding: 1rem 1.1rem; border: 1px solid rgb(43 27 31 / 12%); border-radius: 12px; background: var(--cream); box-shadow: 0 12px 32px rgb(43 27 31 / 16%); color: var(--ink); font-size: .85rem; line-height: 1.5; }
+.footer-developer__card a { margin-top: .25rem; color: var(--red); font-weight: 700; }
 .back-to-top { position: fixed; z-index: 15; right: clamp(1rem, 3vw, 2rem); bottom: clamp(1rem, 3vw, 2rem); display: grid; width: 46px; height: 46px; place-items: center; border-radius: 50%; background: var(--red-gradient); box-shadow: 0 10px 22px rgb(184 15 46 / 25%); color: var(--cream); font-size: 1.2rem; font-weight: 700; opacity: 0; pointer-events: none; text-decoration: none; transform: translateY(12px); transition: opacity .25s ease, transform .25s ease; }
 .back-to-top.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .back-to-top:hover { color: var(--cream); transform: translateY(-3px); }
@@ -162,6 +168,11 @@ body.is-dev .is-placeholder::after { position: absolute; top: .45rem; right: .45
   .credentials { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: no-preference) {
+  .footer-warmth { animation: footer-warmth-bounce 1.8s ease-in-out infinite; }
+  @keyframes footer-warmth-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
   .hero__art .hero__swan { animation: arrive 1.2s cubic-bezier(.2, .8, .2, 1) both; }
   @keyframes arrive { from { opacity: 0; transform: translateY(14px) rotate(-4deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
   .swan__float { transform-origin: 50% 100%; animation: swan-float 6s 1.2s ease-in-out infinite; }
