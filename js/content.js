@@ -1,7 +1,7 @@
 window.SPANORA = {
   config: {
     email: "Conecta@spanora.info",
-    whatsapp: "2011108327042",
+    whatsapp: "201110827032",
     currency: "EGP",
     currencyPlaceholder: true,
     showTestimonialPlaceholders: true,
@@ -113,13 +113,13 @@ window.SPANORA = {
     { quote: "A real student story will be shared here soon.", name: "Student name", program: "Program · level" }
   ],
   faqs: [
-    { question: "How do I choose the right course for me?", answer: "Start with your goals. Think about why you want to learn Spanish, what motivates you, and how you like to learn. If you're unsure, contact us and we'll help you find the best fit." },
-    { question: "How long does it take to learn Spanish?", answer: "It depends on your starting level, your goals, how often you practise, and the course you choose. Learning a language takes time, but consistent practice and the right approach lead to steady progress." },
-    { question: "How do I know my Spanish level?", answer: "Email or WhatsApp us and we'll reply with a short placement test to find your exact level, so you start in the right place." },
-    { question: "Are the courses online or in person?", answer: "All our courses are online. Amo la Lectura and Via Entrenamiento run live on Google Meet. The LCP and Spanora for Professionals are also taught online, and recordings of the sessions are available on request. We don't offer in-person courses at the moment." },
-    { question: "Do I receive a certificate after completing a course?", answer: "Our courses prepare you for the DELE exam, the official Spanish certification issued by Instituto Cervantes. Spanora doesn't issue its own certificates at the moment." },
+    { question: "How do I choose the right course for me?", answer: "Start with your goals! Think about why you want to learn Spanish, what motivates you, and how you prefer to learn. If you're unsure, contact us and we'll help you explore the most suitable option." },
+    { question: "How long does it take to learn Spanish?", answer: "It depends on your starting level, your goals, how often you practice, and the course you choose. Learning a language takes time, but consistent practice and the right approach can help you make steady progress." },
+    { id: "faq-level", question: "How do I know my Spanish level?", answer: "You just need to send us an email, and we will be in touch with a test to determine your exact level and start from there." },
+    { question: "Are the courses online or in person?", answer: "Our available learning formats will depend on the courses offered. For the reading and entertainment courses, the sessions will be through Google Meets. As for the the LCP, Spanish for professionals course, we offer online sessions, and you can also contact us for the recorded sessions. We don't offer in person courses at the moment." },
+    { question: "Do I receive a certificate after completing a course?", answer: "Our courses prepare you for the DELE exam, which is the certified language level certificate, that can be obtained through the Cervantes Institute. We do not offer certificates at the moment." },
     { question: "How can I register for a course?", answer: "Get in touch with us to explore the available courses, find the right fit for your goals, and learn about registration, schedules, and fees." },
-    { question: "How long does it take to finish a course?", answer: "The LCP follows the standard CEFR levels. The duration depends on whether you choose regular or intensive sessions. Contact us to pick the schedule that suits you best." },
-    { question: "Do I need to buy a book for the LCP?", answer: "Yes. We work with Aula, so you'll need the book for your level." }
+    { question: "How long does it take to finish a course?", answer: "The LCP course follows the standard Spanish levels that are based on CEFR (Common European Framework of Reference for Languages). The course duration depends on whether the sessions are regular or intensified. Contact us to choose the type that better fits your schedule." },
+    { question: "Do I need to buy a book for the LCP?", answer: "We'll be working with Aula, so yes. :) " }
   ]
 };

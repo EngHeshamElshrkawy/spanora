@@ -119,7 +119,8 @@
   }
 
   document.querySelector("[data-faq]").innerHTML = data.faqs.map(function (item, index) {
-    return '<details class="faq-item"><summary>' + escapeHtml(item.question) +
+    return '<details class="faq-item"' + (item.id ? ' id="' + escapeHtml(item.id) + '"' : "") +
+      '><summary>' + escapeHtml(item.question) +
       '</summary><div class="faq-item__answer"><p>' + escapeHtml(item.answer) +
       (index === 2 ? ' <a href="' + escapeHtml(placementLink) + '">Request it by email</a> or <a href="' +
         escapeHtml(placementWhatsAppLink) + '">WhatsApp us</a>.' : "") +
