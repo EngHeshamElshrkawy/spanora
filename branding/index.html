@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spanora — Branding concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 2.5rem 1.5rem 4rem; background: #f4efe9; color: #2B1B1F; font-family: "Avenir Next", "Segoe UI", sans-serif; }
+  h1, h2 { font-family: "Playfair Display", Georgia, serif; }
+  h1 { margin: 0 0 .3rem; font-size: 2.2rem; }
+  h2 { margin: 3rem 0 .3rem; font-size: 1.6rem; }
+  .lead, .note { max-width: 780px; color: #735B53; line-height: 1.55; }
+  .palette { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .palette li { display: flex; align-items: center; gap: .5rem; padding: .35rem .8rem .35rem .35rem; border-radius: 99px; background: #fff; font-size: .8rem; }
+  .palette span { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgb(0 0 0 / 8%); }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 1.2rem; }
+  .card { display: grid; place-items: center; gap: 1rem; min-height: 260px; padding: 2rem 1.5rem; border-radius: 24px; background: #FFF6E8; box-shadow: 0 18px 34px rgb(89 39 22 / 8%); }
+  .card--dark { background: #2B1B1F; }
+  .card small { color: #735B53; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+  .card--dark small { color: #c9b5a8; }
+  .icons { display: flex; align-items: end; gap: 1.4rem; }
+  .logo { width: 100%; max-width: 560px; height: auto; }
+  .wordmark { font-family: "Playfair Display", Georgia, serif; font-weight: 700; }
+  .wordmark--script { font-family: "Dancing Script", cursive; }
+  .tagline { font-family: "Playfair Display", Georgia, serif; font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- Shared artwork (viewBox 0 0 200 200). bird-j = flame feathers, bird-r = ruffled feathers. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="neck" d="M146 60 C142 30 100 22 78 38 C56 54 62 80 94 92 C116 100 134 106 140 118"/>
+    <path id="body" d="M128 96 C150 104 162 120 158 138 C152 160 116 166 86 160 C66 156 48 148 34 136 C62 140 84 136 100 128 C116 120 124 110 128 96 Z"/>
+    <g id="spine">
+      <use href="#neck" fill="none" stroke="#2B1B1F" stroke-width="28" stroke-linecap="round"/>
+      <use href="#body" fill="#2B1B1F" stroke="#2B1B1F" stroke-width="10" stroke-linejoin="round"/>
+      <ellipse cx="146" cy="62" rx="16" ry="13" transform="rotate(30 146 62)" fill="#2B1B1F" stroke="#2B1B1F" stroke-width="10"/>
+      <use href="#neck" fill="none" stroke="#D7263D" stroke-width="18" stroke-linecap="round"/>
+      <use href="#body" fill="#D7263D"/>
+      <ellipse cx="146" cy="62" rx="16" ry="13" transform="rotate(30 146 62)" fill="#D7263D"/>
+      <path d="M152 68 L168 90 L158 88 L146 76 Z" fill="#FFC72C" stroke="#2B1B1F" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M168 90 L161 89 L159 83 Z" fill="#2B1B1F" stroke="#2B1B1F" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="146" cy="58" r="3.2" fill="#2B1B1F"/>
+      <g fill="none" stroke="#FFC72C" stroke-width="4" stroke-linecap="round">
+        <path d="M144 118 c4 6 4 12 1 18"/>
+        <path d="M126 130 c4 6 3 11 -1 16"/>
+        <path d="M86 146 c8 -4 16 -6 24 -6"/>
+      </g>
+    </g>
+    <symbol id="bird-j" viewBox="0 0 200 200"><g transform="translate(0 -9)">
+      <g stroke="#2B1B1F" stroke-width="5" stroke-linejoin="round">
+        <path fill="#D7263D" d="M156 134 C166 150 170 168 178 186 C168 178 162 176 156 176 C154 184 152 190 150 196 C144 186 140 182 134 180 C130 188 126 192 122 198 C118 190 114 186 108 184 C102 190 98 194 92 196 C90 188 86 184 80 180 C74 186 68 188 62 190 C62 182 60 176 56 172 C48 174 42 176 34 176 C38 168 40 162 40 156 C30 152 20 148 10 140 C30 140 46 142 60 144 Z"/>
+        <path fill="#FFC72C" d="M152 138 C158 152 160 164 166 176 C158 170 152 168 146 168 C144 176 142 182 138 188 C134 180 130 176 124 174 C120 182 116 186 112 190 C108 182 104 178 98 176 C94 182 88 186 82 188 C82 180 80 176 76 172 C70 176 64 178 56 178 C60 170 62 164 62 158 L72 148 Z"/>
+      </g>
+      <use href="#spine"/></g>
+    </symbol>
+    <symbol id="bird-r" viewBox="0 0 200 200"><g transform="translate(0 -9)">
+      <g stroke="#2B1B1F" stroke-width="5" stroke-linejoin="round">
+        <path fill="#D7263D" d="M156 136 C168 150 178 166 172 178 C166 186 158 182 156 178 C154 190 140 192 138 182 C132 194 118 194 116 184 C110 194 96 192 94 182 C88 190 72 188 72 178 C62 186 46 180 50 170 C38 172 26 164 30 154 C20 152 12 142 16 134 L60 144 Z"/>
+        <path fill="#FFC72C" d="M152 140 C160 150 166 160 162 168 C158 174 150 170 148 166 C146 176 134 178 132 170 C128 180 114 180 112 172 C108 180 94 178 92 170 C86 176 72 174 72 166 C62 170 50 164 54 156 L70 148 Z"/>
+      </g>
+      <use href="#spine"/></g>
+    </symbol>
+    <filter id="halo" x="-10%" y="-10%" width="120%" height="120%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="5" result="grow"/>
+      <feFlood flood-color="#FFF6E8"/>
+      <feComposite in2="grow" operator="in" result="ring"/>
+      <feMerge><feMergeNode in="ring"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <symbol id="tile-j" viewBox="0 0 200 200"><rect width="200" height="200" rx="46" fill="#FFE3C4"/><use href="#bird-j" x="12" y="12" width="176" height="176"/></symbol>
+    <symbol id="tile-r" viewBox="0 0 200 200"><rect width="200" height="200" rx="46" fill="#FFE3C4"/><use href="#bird-r" x="12" y="12" width="176" height="176"/></symbol>
+  </defs>
+</svg>
+
+<h1>Spanora — Branding concepts</h1>
+<p class="lead">This round is based on the red bird reference. The neck and body form the “S” of <em>Spanora</em>, and the tail feathers fall like a flamenco skirt in Spanish red and gold. It has a bold ink outline, and a few gold brush strokes on the body. Icons are shown at 140 / 64 / 32 / 16 px. On dark backgrounds, a thin cream edge keeps the outline visible.</p>
+<ul class="palette">
+  <li><span style="background:#D7263D"></span>Bird red #D7263D</li>
+  <li><span style="background:#C1122F"></span>Spanish red #C1122F</li>
+  <li><span style="background:#FFC72C"></span>Spanish gold #FFC72C</li>
+  <li><span style="background:#FFE3C4"></span>Peach #FFE3C4</li>
+  <li><span style="background:#FFF6E8"></span>Cream #FFF6E8</li>
+  <li><span style="background:#2B1B1F"></span>Ink #2B1B1F</li>
+</ul>
+
+<!-- ============================== TAKE 1 ============================== -->
+<h2>Take 1 · Flame feathers</h2>
+<p class="note">This take is closest to the reference: the skirt ends in sharp, flame-like tips, which gives it energy and passion.</p>
+<div class="row">
+  <div class="card">
+    <div class="icons">
+      <svg viewBox="0 0 200 200" width="140" height="140"><g><use href="#tile-j" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="64" height="64"><g><use href="#tile-j" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="32" height="32"><g><use href="#tile-j" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="16" height="16"><g><use href="#tile-j" width="200" height="200"/></g></svg>
+    </div>
+    <small>Icon · app tile</small>
+  </div>
+  <div class="card card--dark">
+    <div class="icons">
+      <svg viewBox="0 0 200 200" width="140" height="140"><g filter="url(#halo)"><use href="#bird-j" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="64" height="64"><g filter="url(#halo)"><use href="#bird-j" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="32" height="32"><g filter="url(#halo)"><use href="#bird-j" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="16" height="16"><g filter="url(#halo)"><use href="#bird-j" width="200" height="200"/></g></svg>
+    </div>
+    <small>Icon · on dark</small>
+  </div>
+</div>
+<div class="row">
+  <div class="card">
+    <svg class="logo" viewBox="0 0 560 250" role="img" aria-label="Spanora — Tus metas marcan el camino y tus intereses hacen tuyo el viaje">
+      <g><use href="#bird-j" x="6" y="0" width="184" height="184"/></g>
+      <text class="wordmark" x="194" y="140" font-size="100" fill="#2B1B1F">panora</text>
+      <text class="tagline" x="300" y="206" font-size="18" fill="#C1122F" text-anchor="middle">Tus metas marcan el camino</text>
+      <text class="tagline" x="300" y="231" font-size="18" fill="#C1122F" text-anchor="middle">y tus intereses hacen tuyo el viaje</text>
+    </svg>
+    <small>Logo · Español</small>
+  </div>
+  <div class="card card--dark">
+    <svg class="logo" viewBox="0 0 560 250" role="img" aria-label="Spanora — Your goals mark the way, and your interests make the journey yours">
+      <g filter="url(#halo)"><use href="#bird-j" x="6" y="0" width="184" height="184"/></g>
+      <text class="wordmark" x="194" y="140" font-size="100" fill="#FFF6E8">panora</text>
+      <text class="tagline" x="300" y="206" font-size="18" fill="#FFC72C" text-anchor="middle">Your goals mark the way,</text>
+      <text class="tagline" x="300" y="231" font-size="18" fill="#FFC72C" text-anchor="middle">and your interests make the journey yours</text>
+    </svg>
+    <small>Logo · English · on dark</small>
+  </div>
+</div>
+
+<!-- ============================== TAKE 2 ============================== -->
+<h2>Take 2 · Flamenco ruffles</h2>
+<p class="note">The same bird, with the skirt edges softened into rounded flamenco ruffles. It feels friendlier and more welcoming, and stays cleaner at small sizes.</p>
+<div class="row">
+  <div class="card">
+    <div class="icons">
+      <svg viewBox="0 0 200 200" width="140" height="140"><g><use href="#tile-r" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="64" height="64"><g><use href="#tile-r" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="32" height="32"><g><use href="#tile-r" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="16" height="16"><g><use href="#tile-r" width="200" height="200"/></g></svg>
+    </div>
+    <small>Icon · app tile</small>
+  </div>
+  <div class="card card--dark">
+    <div class="icons">
+      <svg viewBox="0 0 200 200" width="140" height="140"><g filter="url(#halo)"><use href="#bird-r" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="64" height="64"><g filter="url(#halo)"><use href="#bird-r" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="32" height="32"><g filter="url(#halo)"><use href="#bird-r" width="200" height="200"/></g></svg>
+      <svg viewBox="0 0 200 200" width="16" height="16"><g filter="url(#halo)"><use href="#bird-r" width="200" height="200"/></g></svg>
+    </div>
+    <small>Icon · on dark</small>
+  </div>
+</div>
+<div class="row">
+  <div class="card">
+    <svg class="logo" viewBox="0 0 560 250" role="img" aria-label="Spanora — Your goals mark the way, and your interests make the journey yours">
+      <g><use href="#bird-r" x="6" y="0" width="184" height="184"/></g>
+      <text class="wordmark" x="194" y="140" font-size="100" fill="#2B1B1F">panora</text>
+      <text class="tagline" x="300" y="206" font-size="18" fill="#C1122F" text-anchor="middle">Your goals mark the way,</text>
+      <text class="tagline" x="300" y="231" font-size="18" fill="#C1122F" text-anchor="middle">and your interests make the journey yours</text>
+    </svg>
+    <small>Logo · English</small>
+  </div>
+  <div class="card card--dark">
+    <svg class="logo" viewBox="0 0 560 250" role="img" aria-label="Spanora — Tus metas marcan el camino y tus intereses hacen tuyo el viaje">
+      <g filter="url(#halo)"><use href="#bird-r" x="6" y="0" width="184" height="184"/></g>
+      <text class="wordmark" x="194" y="140" font-size="100" fill="#FFF6E8">panora</text>
+      <text class="tagline" x="300" y="206" font-size="18" fill="#FFC72C" text-anchor="middle">Tus metas marcan el camino</text>
+      <text class="tagline" x="300" y="231" font-size="18" fill="#FFC72C" text-anchor="middle">y tus intereses hacen tuyo el viaje</text>
+    </svg>
+    <small>Logo · Español · on dark</small>
+  </div>
+</div>
+
+<!-- ============================== WORDMARK COMPARISON ============================== -->
+<h2>Wordmark comparison · script</h2>
+<p class="note">Both takes again, this time with a handwritten “panora” closer to your original scribble, for comparison with the serif.</p>
+<div class="row">
+  <div class="card">
+    <svg class="logo" viewBox="0 0 560 250" role="img" aria-label="Spanora — Tus metas marcan el camino y tus intereses hacen tuyo el viaje">
+      <g><use href="#bird-j" x="6" y="0" width="184" height="184"/></g>
+      <text class="wordmark wordmark--script" x="194" y="140" font-size="108" fill="#2B1B1F">panora</text>
+      <text class="tagline" x="300" y="206" font-size="18" fill="#C1122F" text-anchor="middle">Tus metas marcan el camino</text>
+      <text class="tagline" x="300" y="231" font-size="18" fill="#C1122F" text-anchor="middle">y tus intereses hacen tuyo el viaje</text>
+    </svg>
+    <small>Take 1 · script · Español</small>
+  </div>
+  <div class="card">
+    <svg class="logo" viewBox="0 0 560 250" role="img" aria-label="Spanora — Your goals mark the way, and your interests make the journey yours">
+      <g><use href="#bird-r" x="6" y="0" width="184" height="184"/></g>
+      <text class="wordmark wordmark--script" x="194" y="140" font-size="108" fill="#2B1B1F">panora</text>
+      <text class="tagline" x="300" y="206" font-size="18" fill="#C1122F" text-anchor="middle">Your goals mark the way,</text>
+      <text class="tagline" x="300" y="231" font-size="18" fill="#C1122F" text-anchor="middle">and your interests make the journey yours</text>
+    </svg>
+    <small>Take 2 · script · English</small>
+  </div>
+</div>
+
+</body>
+</html>

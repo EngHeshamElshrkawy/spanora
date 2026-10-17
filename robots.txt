@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://spanora.info/sitemap.xml

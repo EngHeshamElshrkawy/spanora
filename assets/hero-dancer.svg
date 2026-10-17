@@ -1,0 +1,33 @@
+<svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A flamenco dancer holding a golden fan">
+  <defs>
+    <linearGradient id="fan" x1="185" y1="84" x2="365" y2="242" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD25A"/>
+      <stop offset="1" stop-color="#F29A2E"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="173" y1="145" x2="343" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0455C"/>
+      <stop offset="1" stop-color="#B80F2E"/>
+    </linearGradient>
+  </defs>
+  <path d="M200 221 178 106c48-9 97 18 113 64l-91 51Z" fill="url(#fan)"/>
+  <g stroke="#C97A12" stroke-linecap="round" stroke-width="4">
+    <path d="m200 221-22-115M200 221l2-119M200 221l25-112M200 221l48-100M200 221l68-82"/>
+  </g>
+  <path d="M178 106c48-9 97 18 113 64" stroke="#B80F2E" stroke-linecap="round" stroke-width="6"/>
+  <path d="M192 227c-68-75-22-158 75-138 43 9 65 40 86 83" stroke="url(#ribbon)" stroke-linecap="round" stroke-width="30"/>
+  <path d="M332 260c86 38 101 133 32 177-35 23-80 4-112 23-31 18-64 27-91 3 45-12 70-38 76-68 8-42-6-73-30-101" fill="url(#ribbon)"/>
+  <g stroke="#FFE3C4" stroke-linecap="round" stroke-opacity=".8" stroke-width="6">
+    <path d="M348 335c25 24 30 53 16 78"/>
+    <path d="M304 353c20 24 22 50 8 76"/>
+    <path d="M263 367c14 21 13 47-3 68"/>
+  </g>
+  <circle cx="300" cy="174" r="16" fill="#2B1B1F"/>
+  <path d="M294 155 278 138c18-15 39-14 54 1l-24 17" fill="url(#fan)"/>
+  <g stroke="#C97A12" stroke-linecap="round" stroke-width="3">
+    <path d="m294 155-13-17M294 155l2-21M294 155l16-18"/>
+  </g>
+  <circle cx="326" cy="169" r="8" fill="#F0455C"/>
+  <circle cx="339" cy="173" r="8" fill="#D92141"/>
+  <circle cx="332" cy="184" r="8" fill="#B80F2E"/>
+  <circle cx="332" cy="175" r="4" fill="#FFC233"/>
+</svg>
