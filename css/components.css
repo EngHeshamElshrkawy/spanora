@@ -32,9 +32,13 @@
 .hero__logo img { display: block; width: 100%; height: auto; }
 .hero__description { max-width: 420px; margin-bottom: 0; color: var(--muted); font-size: 1.04rem; }
 .hero__art { position: absolute; top: 50%; right: -4%; width: min(57%, 610px); aspect-ratio: 1; transform: translateY(-50%); }
-.hero__art::before, .hero__art::after { position: absolute; inset: 9%; border: 1px solid rgb(201 122 18 / 25%); border-radius: 50%; content: ""; }
+.hero__art::before, .hero__art::after { position: absolute; inset: 9%; border: 1px solid rgb(201 122 18 / 25%); border-radius: 50%; content: ""; translate: var(--hero-parallax-x, 0px) var(--hero-parallax-y, 0px); transition: translate .45s cubic-bezier(.2, .8, .2, 1); }
 .hero__art::after { inset: 16%; border-color: rgb(184 15 46 / 15%); }
-.hero__art .hero__swan { position: absolute; z-index: 1; inset: 14%; width: 72%; height: 72%; overflow: visible; filter: drop-shadow(0 24px 26px rgb(89 39 22 / 12%)); }
+.hero__art[data-parallax]::before { --hero-parallax-x: var(--hero-ring-x, 0px); --hero-parallax-y: var(--hero-ring-y, 0px); }
+.hero__art[data-parallax]::after { --hero-parallax-x: var(--hero-inner-ring-x, 0px); --hero-parallax-y: var(--hero-inner-ring-y, 0px); }
+.hero__art .hero__swan { position: absolute; z-index: 1; inset: 14%; width: 72%; height: 72%; overflow: visible; filter: drop-shadow(0 24px 26px rgb(89 39 22 / 12%)); transition: translate .45s cubic-bezier(.2, .8, .2, 1); }
+.hero__art[data-parallax] .hero__swan { translate: var(--hero-swan-x, 0px) var(--hero-swan-y, 0px); }
+.hero[data-parallax] .hero__copy { translate: var(--hero-copy-x, 0px) var(--hero-copy-y, 0px); transition: translate .45s cubic-bezier(.2, .8, .2, 1); }
 .swan__float, .swan__ruffle, .swan__eye, .swan__wing, .swan__ripple { transform-box: fill-box; }
 .swan__ripple { opacity: .25; stroke-width: 1.2; }
 .swan__ripple--late { opacity: 0; }
