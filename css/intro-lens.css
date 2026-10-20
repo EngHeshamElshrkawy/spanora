@@ -1,4 +1,4 @@
-.intro__stage { position: relative; min-height: 1px; touch-action: none; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='40' viewBox='0 0 32 40'%3E%3Cpath d='M8 2C5 10 1 14 3 20c1 5 5 7 10 6 5-1 8-6 5-11C15 10 11 8 8 2Z' fill='%23F0455C' stroke='%23B80F2E' stroke-width='2'/%3E%3Cpath d='M8 23 22 38' stroke='%232B1B1F' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='m11 24 14 14' stroke='%23C97A12' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 8c-2 4-3 6-2 9' fill='none' stroke='%23FFD25A' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 8 3, crosshair;}
+.intro__stage { position: relative; min-height: 1px; touch-action: pan-y; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='40' viewBox='0 0 32 40'%3E%3Cpath d='M8 2C5 10 1 14 3 20c1 5 5 7 10 6 5-1 8-6 5-11C15 10 11 8 8 2Z' fill='%23F0455C' stroke='%23B80F2E' stroke-width='2'/%3E%3Cpath d='M8 23 22 38' stroke='%232B1B1F' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='m11 24 14 14' stroke='%23C97A12' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M8 8c-2 4-3 6-2 9' fill='none' stroke='%23FFD25A' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 8 3, crosshair;}
 .intro__stage.is-done { cursor: auto; }
 .intro__layer, [data-intro-es] { font-family: var(--font-serif); font-size: clamp(1.12rem, 2vw, 1.35rem); line-height: 1.85; }
 .intro__layer p, [data-intro-es] p { margin: 0 0 1.3rem; }
@@ -29,6 +29,9 @@
 .torch-glow.is-visible { opacity: 1; }
 .intro__tools { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
 .intro__done { max-width: 720px; margin: 1.5rem auto 0; color: var(--red); font-family: var(--font-serif); font-size: clamp(1.35rem, 3vw, 2rem); font-style: italic; text-align: center; }
+.lens-hint { max-width: 720px; margin: 1.5rem auto 0; color: var(--red); font-family: var(--font-serif); font-size: clamp(1.35rem, 3vw, 2rem); font-style: italic; text-align: center; padding: 12px 16px; opacity: 1; visibility: visible; transition: opacity .3s ease, visibility 0s linear;
+ }
+.lens-hint[hidden] { display: block; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s; }
 .intro__done:not([hidden]) { animation: message-in .6s ease both; }
 .intro__done:not([hidden])::after { display: block; width: min(60%, 270px); height: 3px; margin: .5rem auto 0; background: var(--gold); content: ""; transform-origin: left; animation: underline-in .65s .2s ease both; }
 @keyframes message-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
