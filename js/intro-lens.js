@@ -26,7 +26,7 @@
   var frameRequested = false;
   var hintHidden = false;
   var resizeTimer = 0;
-  var threshold = window.SPANORA.config.revealThreshold || 0.9;
+  var threshold = window.SPANORA.config.revealThreshold || 0.7;
   var coverColor = "#FFEED9";
   var feather = 24;
   var stageStyle = getComputedStyle(stage);
@@ -343,6 +343,7 @@
     hint.hidden = true;
     setTorch(false);
     lastPoint = null;
+    hideHint()
   }
 
   function resetReveal() {
@@ -356,6 +357,8 @@
     english.setAttribute("aria-hidden", "true");
     setTorch(false);
     measureAndPaint();
+    hintHidden = false;
+    hint.hidden = false;
   }
 
   stage.addEventListener("pointerenter", function (event) {
@@ -369,7 +372,7 @@
     if (completed) return;
     moveGlow(event);
     queueScratch(event);
-    hideHint();
+    // hideHint();
   });
 
   stage.addEventListener("pointerdown", function (event) {
@@ -378,7 +381,7 @@
     setTorch(true);
     moveGlow(event);
     queueScratch(event);
-    hideHint();
+    // hideHint();
   });
 
   // Stroke breaks are queued in order so they apply between the right points.
