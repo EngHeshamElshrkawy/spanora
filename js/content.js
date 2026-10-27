@@ -1,7 +1,7 @@
 window.SPANORA = {
   config: {
     email: "Conecta@spanora.info",
-    whatsapp: "201110827032",
+    whatsapp: "2001275368833",
     currency: "EGP",
     currencyPlaceholder: true,
     showTestimonialPlaceholders: true,
@@ -30,10 +30,12 @@ window.SPANORA = {
     ]
   },
   teacher: {
-    name: "[Teacher name]",
-    photo: "./assets/teacher-placeholder.svg",
-    bio: "[A short introduction in the teacher's own voice will appear here.]",
-    placeholder: true,
+    name: "Mai AbdelAziz",
+    // photo: "./assets/teacher-placeholder.svg",
+    photo: "./assets/photo.jpeg",
+    // bio: "[A short introduction in the teacher's own voice will appear here.]",
+    bio: "",
+    placeholder: false,
     credentials: [
       { label: "Academic background", value: "Faculty of Al-Alsun, Ain Shams University" },
       { label: "Spanish language proficiency", value: "DELE C1 Certification" },
