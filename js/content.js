@@ -106,7 +106,7 @@ window.SPANORA = {
         "This course focuses on professional vocabulary, workplace communication, presentations, and industry-relevant language skills to help you navigate international opportunities effectively."
       ],
       format: "Online · recordings available on request",
-      fees: [{ level: null, label: "Program fee", price: 2000, placeholder: true }]
+      fees: [{ level: null, label: "Program fee", price: 3000, placeholder: true }]
     }
   ],
   testimonials: [
